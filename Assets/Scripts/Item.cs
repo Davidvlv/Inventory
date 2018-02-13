@@ -51,8 +51,7 @@ public class Item : MonoBehaviour {
         }
         rootPos = position;
 
-        transform.position = new Vector3(position.x - inventory.width * 0.5f + inventory.offset.x, 
-                                        -position.y + inventory.height * 0.5f - inventory.offset.y, 5);
+        transform.position = GetWorldPosition();
     }
 
     public void BeginDrag()
