@@ -1,0 +1,253 @@
+fileFormatVersion: 2
+guid: ecf072c7fc8bf0945a2e4d7f884f3d9c
+timeCreated: 1517953493
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Coin
+    21300002: Boomerang
+    21300004: Torch
+    21300006: Items_6
+    21300008: Items_8
+    21300010: Sword
+    21300012: Items_10
+    21300014: Items_11
+    21300016: Items_12
+    21300018: Moneybag
+  externalObjects: {}
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -1
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 128
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 512
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 512
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Coin
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 30, y: 40}
+        - {x: -16, y: 40}
+        - {x: -39, y: 27}
+        - {x: -39, y: -19}
+        - {x: -30, y: -42}
+        - {x: 25, y: -42}
+        - {x: 30, y: -41}
+        - {x: 43, y: -20}
+        - {x: 43, y: 28}
+      - - {x: -27, y: -6}
+        - {x: -6, y: 25}
+        - {x: 33, y: 19}
+        - {x: 21, y: -23}
+      - - {x: 12, y: 27}
+        - {x: -18, y: 27}
+        - {x: -18, y: -4}
+        - {x: -4, y: -27}
+        - {x: 15, y: -27}
+        - {x: 26, y: -16}
+        - {x: 26, y: 1}
+        - {x: 18, y: 19}
+      - - {x: -7, y: 3}
+        - {x: -3, y: 4}
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Boomerang
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 256
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.25, y: 0.75}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 64, y: 93}
+        - {x: -84, y: 93}
+        - {x: -93, y: 54}
+        - {x: -93, y: -70}
+        - {x: -78, y: -109}
+        - {x: -44, y: -109}
+        - {x: -34, y: -88}
+        - {x: 93, y: 54}
+        - {x: 93, y: 81}
+      - - {x: -80, y: 19}
+        - {x: -28, y: 82}
+        - {x: -45, y: 17}
+        - {x: -43, y: -61}
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Torch
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 128
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.75}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -19, y: 116}
+        - {x: -21, y: 104}
+        - {x: -21, y: -37}
+        - {x: -18, y: -92}
+        - {x: -6, y: -96}
+        - {x: 13, y: -96}
+        - {x: 30, y: 78}
+        - {x: 30, y: 114}
+        - {x: 24, y: 116}
+      - - {x: -5, y: -38}
+        - {x: -5, y: 51}
+        - {x: 3, y: 47}
+        - {x: 3, y: -85}
+      - - {x: 17, y: 93}
+        - {x: 16, y: 91}
+        - {x: 16, y: 85}
+        - {x: 17, y: 85}
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Sword
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 128
+        width: 128
+        height: 384
+      alignment: 9
+      pivot: {x: 0.5, y: 0.8333333}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 10, y: 155}
+        - {x: -7, y: 155}
+        - {x: -16, y: 110}
+        - {x: -53, y: -82}
+        - {x: -53, y: -108}
+        - {x: -14, y: -165}
+        - {x: 10, y: -165}
+        - {x: 43, y: -110}
+        - {x: 43, y: -76}
+        - {x: 12, y: 154}
+      - - {x: -5, y: -129}
+        - {x: -5, y: -111}
+        - {x: -1, y: -2}
+        - {x: 0, y: 108}
+        - {x: 0, y: 121}
+        - {x: 1, y: 122}
+        - {x: 1, y: 130}
+        - {x: 0, y: 130}
+        - {x: 0, y: 118}
+        - {x: 2, y: 68}
+        - {x: -3, y: -152}
+        - {x: -4, y: -153}
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Moneybag
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 256
+        height: 256
+      alignment: 9
+      pivot: {x: 0.25, y: 0.75}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 45, y: 88}
+        - {x: 35, y: 104}
+        - {x: -50, y: 104}
+        - {x: -72, y: 71}
+        - {x: -72, y: -113}
+        - {x: 45, y: -113}
+        - {x: 55, y: -101}
+        - {x: 71, y: -70}
+        - {x: 71, y: -12}
+      - - {x: -62, y: -78}
+        - {x: -17, y: 52}
+        - {x: -19, y: 91}
+        - {x: 55, y: -59}
+      physicsShape: []
+      tessellationDetail: 0
+    outline: []
+    physicsShape: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
