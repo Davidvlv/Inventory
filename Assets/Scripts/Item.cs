@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 public class Item : MonoBehaviour {
+
     [SerializeField]
     private GameObject ItemUIClickPrefab;
 
@@ -12,21 +13,33 @@ public class Item : MonoBehaviour {
 
     public Inventory inventory;
 
+    [SerializeField]
+    private bool initialized;
+
+    private static Vector3 offset = new Vector3(0.5f, 0.5f, 0);
+
     private void Start()
     {
+        if (!initialized)
+        {
+            throw (new System.Exception("Item not initialized! Item must be initialized on Instantiation"));
+        }
+
+        // Make grab points
         foreach(Vector2Int position in data.inventoryShape)
         {
             GameObject UIClicker = Instantiate(ItemUIClickPrefab, transform);
-            UIClicker.transform.Translate(new Vector3(position.x, -position.y, 0));
+            UIClicker.transform.Translate(new Vector3(position.x, position.y, 0));
             ItemUI ui = UIClicker.GetComponent<ItemUI>();
-            ui.item = this;
-            ui.offset = position;
+            ui.Initialize(this, position);
 
         }
     }
 
     public void Initialize(ItemData data, Vector2Int rootPos, Inventory inventory)
     {
+        initialized = true;
+
         this.data = data;
         spriteRenderer.sprite = data.sprite;
 
@@ -51,18 +64,12 @@ public class Item : MonoBehaviour {
         }
         rootPos = position;
 
-        transform.position = GetWorldPosition();
+        transform.parent = inventory.transform;
+        SetLocalPosition();
     }
 
-    public void BeginDrag()
+    public void SetLocalPosition()
     {
-        Debug.Log("Begin Drag");
-
-    }
-
-    public Vector3 GetWorldPosition()
-    {
-        return new Vector3(rootPos.x - inventory.width * 0.5f + inventory.offset.x,
-                          -rootPos.y + inventory.height * 0.5f - inventory.offset.y, 5);
+        transform.localPosition = offset + new Vector3(rootPos.x, rootPos.y, 0);
     }
 }

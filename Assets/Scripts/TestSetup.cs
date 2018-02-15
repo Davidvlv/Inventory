@@ -9,19 +9,27 @@ public class TestSetup : MonoBehaviour {
     public Item testTorch;
     public Item testBag;
     public Item testSword;
-    public Inventory invMain, invTest;
+    public Inventory createInventory;
+
+    InventoryManager iManager;
 
     // Use this for initialization
     void Start()
     {
-        Debug.Log("Place boomerang at 0,0 | success : " + invMain.TryPlaceItem(testBoomerang, new Vector2Int(0, 0)));
-        Debug.Log("Place coin at 1,1 | success : " + invMain.TryPlaceItem(testCoin, new Vector2Int(1, 1)));
-        Debug.Log("Place torch at 2,0 | success : " + invMain.TryPlaceItem(testTorch, new Vector2Int(2, 0)));
-        Debug.Log("Place moneybag at 3,0 | success : " + invMain.TryPlaceItem(testBag, new Vector2Int(3, 0)));
-        Debug.Log("Place sword at 0,2 | success : " + invMain.TryPlaceItem(testSword, new Vector2Int(0, 2)));
-        //Debug.Log("Place boomerang at 5,5 | success : " + invMain.TryPlaceItem(testBoomerang, new Vector2Int(5, 5)));
-        //Debug.Log("Place coin at 5,5 | success : " + invMain.TryPlaceItem(testCoin, new Vector2Int(5, 5)));
-        //Debug.Log("Place torch at 0,0 | success : " + invMain.TryPlaceItem(testTorch, new Vector2Int(0, 0)));
+        iManager = InventoryManager.instance;
+        
+        iManager.TryPlaceItem(testBoomerang, new Vector3(-1.213f, -4.798f, 0));
+        iManager.TryPlaceItem(testCoin, new Vector3(4.5f, 4.5f, 0));
+        iManager.TryPlaceItem(testTorch, new Vector3(0, -4.5f, 0));
+        iManager.TryPlaceItem(testSword, new Vector3(2, -2.5f, 0));
+        //iManager.TryPlaceItem(testBag, new Vector3(3, -4.5f, 0));
+        createInventory.TryPlaceItem(testBag, new Vector2Int(0, 2));
+        
+    }
+
+    private void PlaceItem(Item item, Inventory inventory, int x, int y)
+    {
+        Debug.Log("Place " + item.name + " at " + x + ", " + y + " | success: " + inventory.TryPlaceItem(item, new Vector2Int(x,y)));
     }
 
     // Update is called once per frame

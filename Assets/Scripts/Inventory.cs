@@ -9,25 +9,28 @@ public class Inventory : MonoBehaviour {
 
     public Tilemap tilemap;
     public int height, width;
-    public Vector2 offset;
-
-    public GameObject itemPrefab;
 
     private bool dragMouse;
     
     private Dictionary<Vector2Int, Item> itemGrid = new Dictionary<Vector2Int, Item>();
 
+    private void Start()
+    {
+        //offset += new Vector2(transform.position.x, -transform.position.y);
+    }
+
+    /// <summary>
+    /// Try to place an item at an inventory position (x increases upwards, y increases to the right)
+    /// </summary>
+    /// <param name="item">The item to be placed</param>
+    /// <param name="position">The inventory position to place the item</param>
+    /// <returns>Success of the operation</returns>
     public bool TryPlaceItem(Item item, Vector2Int position)
     {
+        Debug.Log("try place " + item.data.name + " at " + position);
         if (!item.gameObject)
         {
             throw (new System.Exception("Invalid item, item must have a gameobject"));
-        }
-
-        string inventoryShape = "";
-        foreach(Vector2Int v in item.data.inventoryShape)
-        {
-            inventoryShape += v.ToString() + " ";
         }
 
         // check if item fits
@@ -64,6 +67,22 @@ public class Inventory : MonoBehaviour {
         }
 
         return true;
+    }
+
+    public bool TryPlaceItem(Item item, Vector3 worldPosition, ref Vector2Int placedPosition)
+    {
+        Debug.Log("World Position: " + worldPosition);
+        // convert World Position to inventory position
+        Vector3 invPos = worldPosition - transform.position;
+
+        Debug.Log("Inventory Position: " + invPos);
+
+        Vector2Int invPosRounded = new Vector2Int((int)invPos.x, (int)invPos.y);
+
+        Debug.Log("Rounded: " + invPosRounded);
+        placedPosition = invPosRounded;
+
+        return TryPlaceItem(item, invPosRounded);
     }
 
     public void RemoveItem(Vector2Int position, bool destroyItem = false)

@@ -15,5 +15,5 @@ MonoBehaviour:
   sprite: {fileID: 21300002, guid: ecf072c7fc8bf0945a2e4d7f884f3d9c, type: 3}
   inventoryShape:
   - {x: 0, y: 0}
-  - {x: 1, y: 0}
   - {x: 0, y: 1}
+  - {x: 1, y: 1}
