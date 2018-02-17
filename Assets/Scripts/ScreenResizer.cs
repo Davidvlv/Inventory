@@ -6,19 +6,19 @@ public class ScreenResizer : MonoBehaviour {
     Camera cam;
     public int ppu = 128;
     public int scale = 1;
-
-	// Use this for initialization
+    
 	void Start () {
+        Resize();
+	}
+
+    public void Resize()
+    {
         cam = gameObject.GetComponent<Camera>();
 
-        // set orthographic size to pixel perfect
-        // Orthographic size = ((Vert Resolution)/(PPUScale * PPU)) * 0.5
-        float size = cam.pixelHeight / (scale * ppu) * 0.5f;
-        cam.orthographicSize = size;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+        //Debug.Log("Screen Resolution: " + cam.pixelWidth + " x " + cam.pixelHeight + ".");
+
+        float maxTileHeight = (float)cam.pixelHeight / (float)(ppu * scale);
+        //Debug.Log("unit height: " + maxTileHeight);
+        cam.orthographicSize = maxTileHeight * 0.5f;
+    }
 }
