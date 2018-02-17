@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4736682100278724}
   - component: {fileID: 61513842568841552}
-  - component: {fileID: 114690856782030918}
+  - component: {fileID: 114101246969444186}
   m_Layer: 0
   m_Name: ItemClick
   m_TagString: Untagged
@@ -66,7 +66,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &114690856782030918
+--- !u!114 &114101246969444186
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -77,5 +77,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f251fa501840004dbe9f747acb8726d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
-  offset: {x: 0, y: 0}

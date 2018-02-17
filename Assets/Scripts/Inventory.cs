@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-// x ->, y down.
-// 0, 0 is top left.
+[RequireComponent(typeof(Tilemap))]
 public class Inventory : MonoBehaviour {
 
-    public Tilemap tilemap;
+    private Tilemap tilemap;
     public int height, width;
 
     private bool dragMouse;
@@ -16,7 +15,7 @@ public class Inventory : MonoBehaviour {
 
     private void Start()
     {
-        //offset += new Vector2(transform.position.x, -transform.position.y);
+        tilemap = GetComponent<Tilemap>();
     }
 
     /// <summary>
@@ -27,26 +26,26 @@ public class Inventory : MonoBehaviour {
     /// <returns>Success of the operation</returns>
     public bool TryPlaceItem(Item item, Vector2Int position)
     {
-        Debug.Log("try place " + item.data.name + " at " + position);
         if (!item.gameObject)
         {
             throw (new System.Exception("Invalid item, item must have a gameobject"));
         }
 
         // check if item fits
-        foreach (Vector2Int itemPos in item.data.inventoryShape)
+        foreach (Vector2Int slotOffset in item.data.inventoryShape)
         {
-            Vector2Int truePos = itemPos + position;
+            Vector2Int slotPos = position + slotOffset;
             
             // return false if we can't place the item
-            if (truePos.x < 0 || truePos.y < 0 || truePos.x >= width || truePos.y >= height)
+            if (slotPos.x < 0 || slotPos.y < 0 || slotPos.x >= width || slotPos.y >= height)
             {
                 // item out of bounds
                 return false;
             }
 
             Item itemAtPos;
-            itemGrid.TryGetValue(truePos, out itemAtPos);
+            itemGrid.TryGetValue(slotPos, out itemAtPos);
+            
             if (itemAtPos != null)
             {
                 if (itemAtPos.gameObject != item.gameObject)
@@ -56,33 +55,34 @@ public class Inventory : MonoBehaviour {
                 }
             }
         }
-
+        
         // place item - all item positions are clear
         item.Place(this, position);
 
         // map each position in the grid to the item
-        foreach (Vector2Int itemPos in item.data.inventoryShape)
+        foreach (Vector2Int slotOffset in item.data.inventoryShape)
         {
-            itemGrid.Add(position + itemPos, item);
+            itemGrid.Add(position + slotOffset, item);
         }
-
+        
+        // debug each slot
+        foreach(Vector2Int key in itemGrid.Keys)
+        {
+            Item value;
+            itemGrid.TryGetValue(key, out value);
+        }
         return true;
     }
 
     public bool TryPlaceItem(Item item, Vector3 worldPosition, ref Vector2Int placedPosition)
     {
-        Debug.Log("World Position: " + worldPosition);
         // convert World Position to inventory position
-        Vector3 invPos = worldPosition - transform.position;
+        Vector3 inventoryPosition = worldPosition - transform.position;
 
-        Debug.Log("Inventory Position: " + invPos);
-
-        Vector2Int invPosRounded = new Vector2Int((int)invPos.x, (int)invPos.y);
-
-        Debug.Log("Rounded: " + invPosRounded);
-        placedPosition = invPosRounded;
-
-        return TryPlaceItem(item, invPosRounded);
+        // round
+        placedPosition = new Vector2Int((int)inventoryPosition.x, (int)inventoryPosition.y);
+        
+        return TryPlaceItem(item, placedPosition);
     }
 
     public void RemoveItem(Vector2Int position, bool destroyItem = false)

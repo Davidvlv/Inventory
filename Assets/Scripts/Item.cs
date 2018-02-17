@@ -30,8 +30,8 @@ public class Item : MonoBehaviour {
         {
             GameObject UIClicker = Instantiate(ItemUIClickPrefab, transform);
             UIClicker.transform.Translate(new Vector3(position.x, position.y, 0));
-            ItemUI ui = UIClicker.GetComponent<ItemUI>();
-            ui.Initialize(this, position);
+            ItemSlot slot = UIClicker.GetComponent<ItemSlot>();
+            slot.Initialize(this, position);
 
         }
     }

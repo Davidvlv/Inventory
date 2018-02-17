@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemUI : MonoBehaviour {
+public class ItemSlot : MonoBehaviour {
     private Item item;
     private Vector3 offset;
 
@@ -36,6 +36,7 @@ public class ItemUI : MonoBehaviour {
 
         //stick item to mouse
         Vector3 mousePos = cam.ScreenToWorldPoint(Input.mousePosition + new Vector3(0, 0, 10)); // need to specify z for some reason
+        mousePos.z = 3;
         item.transform.position = mousePos - offset;
 
     }
@@ -54,7 +55,5 @@ public class ItemUI : MonoBehaviour {
             item.SetLocalPosition();
             return;
         }
-
-        item.Place(placedInventory, placedPosition);
     }
 }
