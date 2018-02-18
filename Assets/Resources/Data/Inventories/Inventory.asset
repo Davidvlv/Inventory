@@ -11,8 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e41b211c3bac1e4ebc16ae90e7f80a9, type: 3}
   m_Name: Inventory
   m_EditorClassIdentifier: 
-  ruleTile: {fileID: 0}
-  paddingLeft: 0
-  paddingRight: 0
-  paddingTop: 0
-  paddingBottom: 0
+  ruleTile: {fileID: 11400000, guid: 53eb3db264070d545b170ed45d0b99de, type: 2}
+  paddingLeft: 0.25
+  paddingRight: 0.25
+  paddingTop: 1
+  paddingBottom: 0.375
+  edgeRadius: 0.1
+  grabAnywhere: 0
