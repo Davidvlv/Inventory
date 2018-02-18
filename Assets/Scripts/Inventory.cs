@@ -1,21 +1,55 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 [RequireComponent(typeof(Tilemap))]
-public class Inventory : MonoBehaviour {
+[RequireComponent(typeof(TilemapRenderer))]
+public class Inventory : MonoBehaviour
+{
+    public InventoryData data;
+    public Tilemap tilemap;
+    public TilemapRenderer tRenderer;
+    public InventoryDrag topbar;
+    BoxCollider2D box;
+    private BoxCollider2D dragCollider;
 
-    private Tilemap tilemap;
-    public int height, width;
+    public uint height, width;
 
     private bool dragMouse;
     
     private Dictionary<Vector2Int, Item> itemGrid = new Dictionary<Vector2Int, Item>();
-
+    
     private void Start()
     {
-        tilemap = GetComponent<Tilemap>();
+        // Create inventory UI
+        CreateUI();
+    }
+
+    public void CreateUI()
+    {
+        tilemap.ClearAllTiles();
+        for (int i = -1; i <= width; i++)
+        {
+            for (int j = -1; j <= height; j++)
+            {
+                tilemap.SetTile(new Vector3Int(i, j, 0), data.ruleTile);
+            }
+        }
+
+        // Set collider properties
+        box = GetComponent<BoxCollider2D>();
+        box.size = new Vector2(width + data.paddingLeft + data.paddingRight - data.edgeRadius * 2, 
+                                height + data.paddingTop + data.paddingBottom - data.edgeRadius * 2);
+        box.offset = new Vector2((width + data.paddingLeft - data.paddingRight) / 2, 
+                                  (height + data.paddingTop - data.paddingBottom) / 2);
+        box.edgeRadius = data.edgeRadius;
+
+        // Set topbar collider properties
+        topbar.topCollider.size = new Vector2(width + data.paddingLeft + data.paddingRight - data.edgeRadius * 2,
+                                data.paddingTop - data.edgeRadius * 2);
+        topbar.topCollider.offset = new Vector2((width + data.paddingLeft - data.paddingRight) / 2,
+                                        height + data.paddingTop / 2);
+        topbar.topCollider.edgeRadius = data.edgeRadius;
     }
 
     /// <summary>
@@ -129,5 +163,12 @@ public class Inventory : MonoBehaviour {
     public void RemoveItem(int x, int y)
     {
         RemoveItem(new Vector2Int(x, y));
+    }
+
+    public void SetLayer(int x)
+    {
+        Vector3 temp = transform.position;
+        temp.z = -x;
+        transform.position = temp;
     }
 }

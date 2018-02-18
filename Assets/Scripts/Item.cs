@@ -70,6 +70,6 @@ public class Item : MonoBehaviour {
 
     public void SetLocalPosition()
     {
-        transform.localPosition = offset + new Vector3(rootPos.x, rootPos.y, 0);
+        transform.localPosition = offset + new Vector3(rootPos.x, rootPos.y, -0.5f);
     }
 }
