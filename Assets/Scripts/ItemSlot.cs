@@ -5,7 +5,7 @@ using UnityEngine;
 public class ItemSlot : MonoBehaviour {
     private Item item;
     private Vector3 offset;
-    private static Vector3 halfSquare = new Vector3(0.5f, 0.5f, 0.5f);
+    private static Vector3 halfSquare = new Vector3(0.5f, 0.5f, 0);
     private Camera cam;
 
     private bool isDragged;
@@ -21,8 +21,8 @@ public class ItemSlot : MonoBehaviour {
     public void Initialize(Item item, Vector2Int offset)
     {
         this.item = item;
-        this.offset = new Vector3(offset.x, offset.y, 0) + halfSquare;
-        transform.Translate(item.transform.position - this.offset + halfSquare);
+        this.offset = new Vector3(offset.x, offset.y, 0);// + halfSquare;
+        transform.Translate(this.offset + halfSquare);
     }
 
     private void OnMouseDown()
@@ -38,7 +38,7 @@ public class ItemSlot : MonoBehaviour {
         // stick item to mouse
         Vector3 mousePos = cam.ScreenToWorldPoint(Input.mousePosition + new Vector3(0, 0, 10)); // need to specify z for some reason
         mousePos.z = -0.5f;
-        item.transform.position = mousePos - offset - halfSquare;
+        item.transform.position = mousePos - offset;
 
         // move item in front of all inventories
         //Vector3 temp = item.transform.localPosition;
