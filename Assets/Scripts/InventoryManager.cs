@@ -22,18 +22,6 @@ public class InventoryManager : MonoBehaviour
     [SerializeField]
     List<Inventory> inventories = new List<Inventory>();
 
-    // Use this for initialization
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     /// <summary>
     /// Brings an inventory to the front of the screen
     /// </summary>
@@ -42,6 +30,18 @@ public class InventoryManager : MonoBehaviour
     {
         inventories.Remove(inventory);
         inventories.Add(inventory);
+        OrderZ();
+    }
+
+    public void OrderZ()
+    {
+        // places inventories at z= 0, 1, 2, ...
+        for (int i = 0; i < inventories.Count; i++)
+        {
+            Vector3 temp = inventories[inventories.Count - 1 - i].transform.position;
+            temp.z = i;
+            inventories[inventories.Count - 1 - i].transform.position = temp;
+        }
     }
 
     public void AddInventory(Inventory inventory)
@@ -52,12 +52,17 @@ public class InventoryManager : MonoBehaviour
     public Inventory TryPlaceItem(Item item, Vector3 worldPosition, ref Vector2Int placedPosition)
     {
         // try place item in each inventory (ordered front to back)
-        foreach (Inventory inventory in inventories)
+        for (int i = inventories.Count - 1; i >= 0; i--)
         {
-            if (inventory.TryPlaceItem(item, worldPosition, ref placedPosition))
+            if (!inventories[i].InRange(worldPosition))
             {
-                return inventory;
+                continue;
             }
+            if (!inventories[i].TryPlaceItem(item, worldPosition, ref placedPosition))
+            {
+                return null;
+            }
+            return inventories[i];
         }
         return null;
     }

@@ -57,26 +57,29 @@ public class Inventory : MonoBehaviour
     /// </summary>
     /// <param name="item">The item to be placed</param>
     /// <param name="position">The inventory position to place the item</param>
-    /// <returns>Success of the operation</returns>
+    /// <returns>True: Success; False: Failed but in range; Null: out of range</returns>
     public bool TryPlaceItem(Item item, Vector2Int position)
     {
         if (!item.gameObject)
         {
             throw (new System.Exception("Invalid item, item must have a gameobject"));
         }
-
+        Debug.Log("Trying to place item at: " + position);
         // check if item fits
         foreach (Vector2Int slotOffset in item.data.inventoryShape)
         {
+            Debug.Log("Slot offset: " + slotOffset);
             Vector2Int slotPos = position + slotOffset;
-            
+            Debug.Log("Checking: " + slotPos);
+
             // return false if we can't place the item
-            if (slotPos.x < 0 || slotPos.y < 0 || slotPos.x >= width || slotPos.y >= height)
+            if (!InRange(slotPos))
             {
+                Debug.Log("out of range");
                 // item out of bounds
                 return false;
             }
-
+            Debug.Log("in range");
             Item itemAtPos;
             itemGrid.TryGetValue(slotPos, out itemAtPos);
             
@@ -110,13 +113,28 @@ public class Inventory : MonoBehaviour
 
     public bool TryPlaceItem(Item item, Vector3 worldPosition, ref Vector2Int placedPosition)
     {
-        // convert World Position to inventory position
-        Vector3 inventoryPosition = worldPosition - transform.position;
-
-        // round
-        placedPosition = new Vector2Int((int)inventoryPosition.x, (int)inventoryPosition.y);
-        
+        Debug.Log("Inventory world position: " + worldPosition);
+        placedPosition = WorldToInventoryPoint(worldPosition);
+        Debug.Log("Inventory placed Position: " + placedPosition);
         return TryPlaceItem(item, placedPosition);
+    }
+
+    public Vector2Int WorldToInventoryPoint(Vector3 worldPoint)
+    {
+        Debug.Log("WTI worldPoint: " + worldPoint);
+        Vector3 inventoryPoint = worldPoint - transform.position;
+        Debug.Log("invP: " + worldPoint + " - " + transform.position + " = " + inventoryPoint);
+        return new Vector2Int(Mathf.RoundToInt(inventoryPoint.x), Mathf.RoundToInt(inventoryPoint.y));
+    }
+
+    public bool InRange(Vector2Int slotPosition)
+    {
+        return (slotPosition.x >= 0 && slotPosition.y >= 0 && slotPosition.x < width && slotPosition.y < height);
+    }
+
+    public bool InRange(Vector3 worldPoint)
+    {
+        return InRange(WorldToInventoryPoint(worldPoint));
     }
 
     public void RemoveItem(Vector2Int position, bool destroyItem = false)

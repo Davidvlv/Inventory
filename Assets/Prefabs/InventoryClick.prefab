@@ -78,4 +78,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 0}
-  topCollider: {fileID: 0}
+  topCollider: {fileID: 61513842568841552}

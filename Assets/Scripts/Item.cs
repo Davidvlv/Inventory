@@ -29,7 +29,6 @@ public class Item : MonoBehaviour {
         foreach(Vector2Int position in data.inventoryShape)
         {
             GameObject UIClicker = Instantiate(ItemUIClickPrefab, transform);
-            UIClicker.transform.Translate(new Vector3(position.x, position.y, 0));
             ItemSlot slot = UIClicker.GetComponent<ItemSlot>();
             slot.Initialize(this, position);
 

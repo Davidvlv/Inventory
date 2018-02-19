@@ -4,6 +4,8 @@ public class InventoryDrag : MonoBehaviour {
     public Inventory inventory;
     public BoxCollider2D topCollider;
 
+    private InventoryManager iManager;
+
     private Vector3 offset;
 
     private Camera cam;
@@ -13,6 +15,7 @@ public class InventoryDrag : MonoBehaviour {
     private void Start()
     {
         cam = Camera.main;
+        iManager = InventoryManager.instance;
     }
 
     private void OnMouseDown()
@@ -20,6 +23,7 @@ public class InventoryDrag : MonoBehaviour {
         isDragged = true;
         offset = transform.position - cam.ScreenToWorldPoint(Input.mousePosition);
         offset.z = 0;
+        iManager.SendToFront(inventory);
     }
 
     private void Update()
