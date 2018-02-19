@@ -53,7 +53,10 @@ public class Item : MonoBehaviour {
 
     public void Place(Inventory inventory, Vector2Int position)
     {
-        RemoveFromInventory();
+        if (this.inventory)
+        {
+            RemoveFromInventory();
+        }
 
         // check if we are placing in a different inventory
         if (this.inventory.gameObject != inventory.gameObject)

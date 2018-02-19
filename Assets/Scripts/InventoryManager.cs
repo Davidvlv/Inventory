@@ -19,8 +19,12 @@ public class InventoryManager : MonoBehaviour
 
     #endregion
 
+    public GameObject inventoryPrefab;
+    public InventoryType defaultType;
+
     [SerializeField]
     List<Inventory> inventories = new List<Inventory>();
+    // #TODO close inventories
 
     /// <summary>
     /// Brings an inventory to the front of the screen
@@ -70,5 +74,28 @@ public class InventoryManager : MonoBehaviour
     {
         Vector2Int unused = Vector2Int.zero;
         return TryPlaceItem(item, worldPosition, ref unused);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="worldPosition">The world position of the middle of the new inventory</param>
+    /// <param name="inventory">The inventory type to </param>
+    /// <returns></returns>
+    public Inventory NewInventory(Vector3 worldPosition, uint width, uint height, string name = "Inventory", InventoryType type = null)
+    {
+        if (!type)
+        {
+            type = defaultType;
+        }
+
+        GameObject obj = Instantiate(inventoryPrefab, transform);
+        obj.transform.position = new Vector3(worldPosition.x - width/2, worldPosition.y - height/2);
+        Inventory inventory = obj.GetComponent<Inventory>();
+        inventory.Initialize(type, width, height, name);
+
+        AddInventory(inventory);
+
+        return inventory;
     }
 }

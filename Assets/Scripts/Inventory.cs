@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -6,7 +7,7 @@ using UnityEngine.Tilemaps;
 [RequireComponent(typeof(TilemapRenderer))]
 public class Inventory : MonoBehaviour
 {
-    public InventoryData data;
+    public InventoryType type;
     public Tilemap tilemap;
     public TilemapRenderer tRenderer;
     public InventoryDrag topbar;
@@ -18,7 +19,15 @@ public class Inventory : MonoBehaviour
     private bool dragMouse;
     
     private Dictionary<Vector2Int, Item> itemGrid = new Dictionary<Vector2Int, Item>();
-    
+
+    internal void Initialize(InventoryType type, uint height, uint width, string name)
+    {
+        this.type = type;
+        this.height = height;
+        this.width = width;
+        this.name = name;
+    }
+
     private void Start()
     {
         // Create inventory UI
@@ -32,24 +41,24 @@ public class Inventory : MonoBehaviour
         {
             for (int j = -1; j <= height; j++)
             {
-                tilemap.SetTile(new Vector3Int(i, j, 0), data.ruleTile);
+                tilemap.SetTile(new Vector3Int(i, j, 0), type.ruleTile);
             }
         }
 
         // Set collider properties
         box = GetComponent<BoxCollider2D>();
-        box.size = new Vector2(width + data.paddingLeft + data.paddingRight - data.edgeRadius * 2, 
-                                height + data.paddingTop + data.paddingBottom - data.edgeRadius * 2);
-        box.offset = new Vector2((width + data.paddingLeft - data.paddingRight) / 2, 
-                                  (height + data.paddingTop - data.paddingBottom) / 2);
-        box.edgeRadius = data.edgeRadius;
+        box.size = new Vector2(width + type.paddingLeft + type.paddingRight - type.edgeRadius * 2, 
+                                height + type.paddingTop + type.paddingBottom - type.edgeRadius * 2);
+        box.offset = new Vector2((width + type.paddingLeft - type.paddingRight) / 2, 
+                                  (height + type.paddingTop - type.paddingBottom) / 2);
+        box.edgeRadius = type.edgeRadius;
 
         // Set topbar collider properties
-        topbar.topCollider.size = new Vector2(width + data.paddingLeft + data.paddingRight - data.edgeRadius * 2,
-                                data.paddingTop - data.edgeRadius * 2);
-        topbar.topCollider.offset = new Vector2((width + data.paddingLeft - data.paddingRight) / 2,
-                                        height + data.paddingTop / 2);
-        topbar.topCollider.edgeRadius = data.edgeRadius;
+        topbar.topCollider.size = new Vector2(width + type.paddingLeft + type.paddingRight - type.edgeRadius * 2,
+                                type.paddingTop - type.edgeRadius * 2);
+        topbar.topCollider.offset = new Vector2((width + type.paddingLeft - type.paddingRight) / 2,
+                                        height + type.paddingTop / 2);
+        topbar.topCollider.edgeRadius = type.edgeRadius;
     }
 
     /// <summary>
@@ -64,22 +73,17 @@ public class Inventory : MonoBehaviour
         {
             throw (new System.Exception("Invalid item, item must have a gameobject"));
         }
-        Debug.Log("Trying to place item at: " + position);
         // check if item fits
         foreach (Vector2Int slotOffset in item.data.inventoryShape)
         {
-            Debug.Log("Slot offset: " + slotOffset);
             Vector2Int slotPos = position + slotOffset;
-            Debug.Log("Checking: " + slotPos);
 
             // return false if we can't place the item
             if (!InRange(slotPos))
             {
-                Debug.Log("out of range");
                 // item out of bounds
                 return false;
             }
-            Debug.Log("in range");
             Item itemAtPos;
             itemGrid.TryGetValue(slotPos, out itemAtPos);
             
@@ -101,29 +105,18 @@ public class Inventory : MonoBehaviour
         {
             itemGrid.Add(position + slotOffset, item);
         }
-        
-        // debug each slot
-        foreach(Vector2Int key in itemGrid.Keys)
-        {
-            Item value;
-            itemGrid.TryGetValue(key, out value);
-        }
         return true;
     }
 
     public bool TryPlaceItem(Item item, Vector3 worldPosition, ref Vector2Int placedPosition)
     {
-        Debug.Log("Inventory world position: " + worldPosition);
         placedPosition = WorldToInventoryPoint(worldPosition);
-        Debug.Log("Inventory placed Position: " + placedPosition);
         return TryPlaceItem(item, placedPosition);
     }
 
     public Vector2Int WorldToInventoryPoint(Vector3 worldPoint)
     {
-        Debug.Log("WTI worldPoint: " + worldPoint);
         Vector3 inventoryPoint = worldPoint - transform.position;
-        Debug.Log("invP: " + worldPoint + " - " + transform.position + " = " + inventoryPoint);
         return new Vector2Int(Mathf.RoundToInt(inventoryPoint.x), Mathf.RoundToInt(inventoryPoint.y));
     }
 
