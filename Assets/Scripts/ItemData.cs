@@ -9,6 +9,11 @@ public class ItemData : ScriptableObject
         return i1.name.CompareTo(i2.name);
     }
 
+    public static int SortBySize(ItemData i1, ItemData i2)
+    {
+        return i2.inventoryShape.Count.CompareTo(i1.inventoryShape.Count);
+    }
+
     public new string name;
     public Sprite sprite;
 

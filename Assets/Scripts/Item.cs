@@ -53,6 +53,7 @@ public class Item : MonoBehaviour {
 
     public void Place(Inventory inventory, Vector2Int position)
     {
+        rootPos = position;
         if (this.inventory)
         {
             RemoveFromInventory();
@@ -64,7 +65,6 @@ public class Item : MonoBehaviour {
             // swap inventories
             this.inventory = inventory;
         }
-        rootPos = position;
 
         transform.parent = inventory.transform;
         SetLocalPosition();

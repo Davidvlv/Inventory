@@ -57,8 +57,13 @@ public class InventoryManager : MonoBehaviour
 
     public void NewInventoryWithItems(List<ItemData> items)
     {
+        bool incrementHeightOrWidth = false;
         uint height = 1, width = 1;
         Inventory newInventory = NewInventory(Vector3.zero, width, height);
+
+        // biggest to smallest for best packing
+        items.Sort(ItemData.SortBySize);
+
         foreach (ItemData data in items)
         {
             Item item = Instantiate(itemPrefab).GetComponent<Item>();
@@ -68,24 +73,45 @@ public class InventoryManager : MonoBehaviour
             bool placed = false;
             while (!placed)
             {
-                for (int i = 0; i < newInventory.width; i++)
-                {
-                    for (int j = 0; j < newInventory.height; j++)
-                    {
-                        placed = newInventory.TryPlaceItem(item, new Vector2Int(i, j));
-                    }
-                }
+                placed = PackItem(item, newInventory);
                 if (!placed)
                 {
-                    newInventory.Resize(++height, ++width);
+                    if (incrementHeightOrWidth)
+                    {
+                        height++;
+                    }
+                    else
+                    {
+                        width++;
+                    }
+                    incrementHeightOrWidth = !incrementHeightOrWidth;
+
+                    newInventory.Resize(height, width);
                 }
-                if (width > 5)
+                if (width > 10)
                 {
                     break;
                 }
             }
 
         }
+    }
+
+    private bool PackItem(Item item, Inventory inventory)
+    {
+        bool placed = false;
+        for (int i = 0; i < inventory.width; i++)
+        {
+            for (int j = 0; j < inventory.height; j++)
+            {
+                placed = inventory.TryPlaceItem(item, new Vector2Int(i, j));
+                if (placed)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public Inventory TryPlaceItem(Item item, Vector3 worldPosition, ref Vector2Int placedPosition)
