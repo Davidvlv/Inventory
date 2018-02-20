@@ -9,11 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 13d34367ea778604185fd513c85ffbab, type: 3}
-  m_Name: Boomerang
+  m_Name: Large Bag
   m_EditorClassIdentifier: 
-  name: Boomerang
-  sprite: {fileID: 21300002, guid: ecf072c7fc8bf0945a2e4d7f884f3d9c, type: 3}
+  name: Large Bag
+  sprite: {fileID: 21300008, guid: 1a980dd3545b1e24a8564893e2372fc6, type: 3}
   inventoryShape:
   - {x: 0, y: 0}
+  - {x: 1, y: 0}
   - {x: 0, y: 1}
   - {x: 1, y: 1}

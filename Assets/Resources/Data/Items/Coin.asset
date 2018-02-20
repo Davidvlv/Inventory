@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Name: Coin
   m_EditorClassIdentifier: 
   name: Coin
-  sprite: {fileID: 21300000, guid: ecf072c7fc8bf0945a2e4d7f884f3d9c, type: 3}
+  sprite: {fileID: 21300002, guid: 1a980dd3545b1e24a8564893e2372fc6, type: 3}
   inventoryShape:
   - {x: 0, y: 0}
