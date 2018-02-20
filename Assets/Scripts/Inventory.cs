@@ -61,6 +61,13 @@ public class Inventory : MonoBehaviour
         topbar.topCollider.edgeRadius = type.edgeRadius;
     }
 
+    public void Resize(uint width, uint height)
+    {
+        this.width = width;
+        this.height = height;
+        CreateUI();
+    }
+
     /// <summary>
     /// Try to place an item at an inventory position (x increases upwards, y increases to the right)
     /// </summary>

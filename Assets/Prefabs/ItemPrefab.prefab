@@ -52,12 +52,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06d53e91a43cfc445955c3a10bea4c59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemUIClickPrefab: {fileID: 1630263650031626, guid: bb3ae5d4912177e4b872c565ab764b46,
+  itemUIClickPrefab: {fileID: 1630263650031626, guid: bb3ae5d4912177e4b872c565ab764b46,
     type: 2}
   data: {fileID: 0}
   rootPos: {x: 0, y: 0}
   spriteRenderer: {fileID: 212224578212336992}
   inventory: {fileID: 0}
+  initialized: 0
 --- !u!212 &212224578212336992
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -91,7 +92,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

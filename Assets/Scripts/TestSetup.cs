@@ -4,12 +4,7 @@ using UnityEngine;
 
 public class TestSetup : MonoBehaviour {
 
-    public Item testBoomerang;
-    public Item testCoin;
-    public Item testTorch;
-    public Item testBag;
-    public Item testSword;
-    public Inventory createInventory;
+    public List<ItemData> items = new List<ItemData>();
 
     InventoryManager iManager;
 
@@ -19,11 +14,13 @@ public class TestSetup : MonoBehaviour {
         iManager = InventoryManager.instance;
 
         iManager.NewInventory(new Vector3(-12, 0), 2, 2);
+        iManager.NewInventory(new Vector3(5, 0), 5, 4);
+        iManager.NewInventoryWithItems(items);
 
-        iManager.TryPlaceItem(testBoomerang, new Vector3(-1.213f, -4.798f, 0));
-        iManager.TryPlaceItem(testCoin, new Vector3(4.5f, 4.5f, 0));
-        iManager.TryPlaceItem(testTorch, new Vector3(0, -4.5f, 0));
-        iManager.TryPlaceItem(testSword, new Vector3(2, -2.5f, 0));
+        //iManager.TryPlaceItem(testBoomerang, new Vector3(-1.213f, -4.798f, 0));
+        //iManager.TryPlaceItem(testCoin, new Vector3(4.5f, 4.5f, 0));
+        //iManager.TryPlaceItem(testTorch, new Vector3(0, -4.5f, 0));
+        //iManager.TryPlaceItem(testSword, new Vector3(2, -2.5f, 0));
         //iManager.TryPlaceItem(testBag, new Vector3(3, -4.5f, 0));
         //createInventory.TryPlaceItem(testBag, new Vector2Int(0, 0));
 

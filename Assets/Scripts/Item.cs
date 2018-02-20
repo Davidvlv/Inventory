@@ -2,8 +2,7 @@
 
 public class Item : MonoBehaviour {
 
-    [SerializeField]
-    private GameObject ItemUIClickPrefab;
+    public GameObject itemUIClickPrefab;
 
     public ItemData data;
 
@@ -28,7 +27,7 @@ public class Item : MonoBehaviour {
         // Make grab points
         foreach(Vector2Int position in data.inventoryShape)
         {
-            GameObject UIClicker = Instantiate(ItemUIClickPrefab, transform);
+            GameObject UIClicker = Instantiate(itemUIClickPrefab, transform);
             ItemSlot slot = UIClicker.GetComponent<ItemSlot>();
             slot.Initialize(this, position);
 
@@ -41,6 +40,7 @@ public class Item : MonoBehaviour {
 
         this.data = data;
         spriteRenderer.sprite = data.sprite;
+        name = data.name;
 
         this.rootPos = rootPos;
         this.inventory = inventory;

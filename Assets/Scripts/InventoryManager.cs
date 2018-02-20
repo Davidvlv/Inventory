@@ -20,6 +20,7 @@ public class InventoryManager : MonoBehaviour
     #endregion
 
     public GameObject inventoryPrefab;
+    public GameObject itemPrefab;
     public InventoryType defaultType;
 
     [SerializeField]
@@ -51,6 +52,40 @@ public class InventoryManager : MonoBehaviour
     public void AddInventory(Inventory inventory)
     {
         inventories.Add(inventory);
+        OrderZ();
+    }
+
+    public void NewInventoryWithItems(List<ItemData> items)
+    {
+        uint height = 1, width = 1;
+        Inventory newInventory = NewInventory(Vector3.zero, width, height);
+        foreach (ItemData data in items)
+        {
+            Item item = Instantiate(itemPrefab).GetComponent<Item>();
+            item.Initialize(data, new Vector2Int(0, 0), newInventory);
+
+            // try place item in each slot
+            bool placed = false;
+            while (!placed)
+            {
+                for (int i = 0; i < newInventory.width; i++)
+                {
+                    for (int j = 0; j < newInventory.height; j++)
+                    {
+                        placed = newInventory.TryPlaceItem(item, new Vector2Int(i, j));
+                    }
+                }
+                if (!placed)
+                {
+                    newInventory.Resize(++height, ++width);
+                }
+                if (width > 5)
+                {
+                    break;
+                }
+            }
+
+        }
     }
 
     public Inventory TryPlaceItem(Item item, Vector3 worldPosition, ref Vector2Int placedPosition)

@@ -50,9 +50,6 @@ public class ItemSlot : MonoBehaviour {
     private void OnMouseUp()
     {
         isDragged = false;
-        Debug.Log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        Debug.Log("Offset : " + offset);
-        Debug.Log("ItemSlot position" + (cam.ScreenToWorldPoint(Input.mousePosition) - offset));
         Vector2Int placedPosition = Vector2Int.zero;
         // Get the world position
         Inventory placedInventory = iManager.TryPlaceItem(item, cam.ScreenToWorldPoint(Input.mousePosition) - offset - halfSquare, ref placedPosition);
