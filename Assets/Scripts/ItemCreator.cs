@@ -11,13 +11,17 @@ public class ItemCreator : MonoBehaviour {
 
     public Dropdown itemDropdown;
 
+    private InventoryManager iManager;
+
     void Start () {
+        iManager = InventoryManager.instance;
+
         // Add all ItemData in the Data folder
-        Object[] objs = Resources.LoadAll("Data");
+        Object[] objs = Resources.LoadAll("Data/Items");
         
         foreach(Object obj in objs)
         {
-            //items.Add((ItemDataBase)obj);
+            items.Add((ItemDataBase)obj);
         }
 
         // sort by name
@@ -28,21 +32,25 @@ public class ItemCreator : MonoBehaviour {
 
         foreach(ItemDataBase item in items)
         {
-            //options.Add(new Dropdown.OptionData(item.name, item.sprite));
+            options.Add(new Dropdown.OptionData(item.name));
         }
+        options.Add(new Dropdown.OptionData("Everything!"));
+
         itemDropdown.AddOptions(options);
 
 	}
 
     public void SelectItem(int i)
     {
+        Debug.Log(i);
+        // everything!
+        if (i > items.Count)
+        {
+            iManager.NewInventoryWithItems(items);
+            return;
+        }
         // option[0] is "Choose an item"
-        CreateItem(items[i - 1]);
-    }
-
-    public void CreateItem(ItemDataBase item)
-    {
-        Instantiate(itemPrefab);
+        iManager.NewInventoryWithItems(new List<ItemDataBase>() { items[i - 1] });
     }
 	
 

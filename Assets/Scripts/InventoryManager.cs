@@ -40,61 +40,24 @@ public class InventoryManager : MonoBehaviour
 
     public void OrderZ()
     {
+        if (inventories.Count <= 1)
+        {
+            return;
+        }
         // places inventories at z= 0, 1, 2, ...
         for (int i = 0; i < inventories.Count; i++)
         {
+            //Debug.Log(inventories.Count + " - 1 - " + i + " = " + (inventories.Count - 1 - i));
             Vector3 temp = inventories[inventories.Count - 1 - i].transform.position;
             temp.z = i;
             inventories[inventories.Count - 1 - i].transform.position = temp;
         }
     }
 
-    public void AddInventory(Inventory inventory)
+    public void AddInventory(Inventory inventory, bool closeable = true)
     {
         inventories.Add(inventory);
         OrderZ();
-    }
-
-    public void NewInventoryWithItems(List<ItemDataBase> items)
-    {
-        bool incrementHeightOrWidth = false;
-        uint height = 1, width = 1;
-        Inventory newInventory = NewInventory(Vector3.zero, width, height);
-
-        // biggest to smallest for best packing
-        items.Sort(ItemDataBase.SortBySize);
-
-        foreach (ItemDataBase data in items)
-        {
-            Item item = Instantiate(itemPrefab).GetComponent<Item>();
-            item.Initialize(data, new Vector2Int(0, 0));
-
-            // try place item in each slot
-            bool placed = false;
-            while (!placed)
-            {
-                placed = PackItem(item, newInventory);
-                if (!placed)
-                {
-                    if (incrementHeightOrWidth)
-                    {
-                        height++;
-                    }
-                    else
-                    {
-                        width++;
-                    }
-                    incrementHeightOrWidth = !incrementHeightOrWidth;
-
-                    newInventory.Resize(height, width);
-                }
-                if (width > 10)
-                {
-                    break;
-                }
-            }
-
-        }
     }
 
     private bool PackItem(Item item, Inventory inventory)
@@ -158,5 +121,47 @@ public class InventoryManager : MonoBehaviour
         AddInventory(inventory);
 
         return inventory;
+    }
+
+    public void NewInventoryWithItems(List<ItemDataBase> items)
+    {
+        bool incrementHeightOrWidth = false;
+        uint height = 1, width = 1;
+        Inventory newInventory = NewInventory(Vector3.zero, width, height);
+
+        // biggest to smallest for best packing
+        items.Sort(ItemDataBase.SortBySize);
+
+        foreach (ItemDataBase data in items)
+        {
+            Item item = Instantiate(itemPrefab).GetComponent<Item>();
+            item.Initialize(data, new Vector2Int(0, 0));
+
+            // try place item in each slot
+            bool placed = false;
+            while (!placed)
+            {
+                placed = PackItem(item, newInventory);
+                if (!placed)
+                {
+                    if (incrementHeightOrWidth)
+                    {
+                        height++;
+                    }
+                    else
+                    {
+                        width++;
+                    }
+                    incrementHeightOrWidth = !incrementHeightOrWidth;
+
+                    newInventory.Resize(height, width);
+                }
+                if (width > 10)
+                {
+                    break;
+                }
+            }
+
+        }
     }
 }

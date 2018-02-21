@@ -7,5 +7,6 @@ public class InventoryType : ScriptableObject {
     public RuleTile ruleTile;
     public float paddingLeft, paddingRight, paddingTop, paddingBottom;
     public float edgeRadius;
-    public bool grabAnywhere;
+
+    public bool closeable;
 }
