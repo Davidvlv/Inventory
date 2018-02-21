@@ -55,19 +55,19 @@ public class InventoryManager : MonoBehaviour
         OrderZ();
     }
 
-    public void NewInventoryWithItems(List<ItemData> items)
+    public void NewInventoryWithItems(List<ItemDataBase> items)
     {
         bool incrementHeightOrWidth = false;
         uint height = 1, width = 1;
         Inventory newInventory = NewInventory(Vector3.zero, width, height);
 
         // biggest to smallest for best packing
-        items.Sort(ItemData.SortBySize);
+        items.Sort(ItemDataBase.SortBySize);
 
-        foreach (ItemData data in items)
+        foreach (ItemDataBase data in items)
         {
             Item item = Instantiate(itemPrefab).GetComponent<Item>();
-            item.Initialize(data, new Vector2Int(0, 0), newInventory);
+            item.Initialize(data, new Vector2Int(0, 0));
 
             // try place item in each slot
             bool placed = false;

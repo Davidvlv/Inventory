@@ -8,11 +8,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13d34367ea778604185fd513c85ffbab, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b3ccff85dc20d7458bc9b7464dbe96c, type: 3}
   m_Name: Torch
   m_EditorClassIdentifier: 
   name: Torch
-  sprite: {fileID: 21300000, guid: 3fc4efce6adba614eaceb69dce22ee42, type: 3}
   inventoryShape:
   - {x: 0, y: 0}
   - {x: 0, y: 1}
+  controller: {fileID: 9100000, guid: e726883ed5112f3428fb13126d84ebdf, type: 2}

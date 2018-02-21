@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class ItemCreator : MonoBehaviour {
 
-    private List<ItemData> items = new List<ItemData>();
+    private List<ItemDataBase> items = new List<ItemDataBase>();
 
     public GameObject itemPrefab;
     public Inventory createInventory;
@@ -13,22 +13,22 @@ public class ItemCreator : MonoBehaviour {
 
     void Start () {
         // Add all ItemData in the Data folder
-        Object[] objs = Resources.LoadAll("Data", typeof(ItemData));
+        Object[] objs = Resources.LoadAll("Data");
         
         foreach(Object obj in objs)
         {
-            items.Add((ItemData)obj);
+            //items.Add((ItemDataBase)obj);
         }
 
         // sort by name
-        items.Sort(ItemData.SortByName);
+        items.Sort(ItemDataBase.SortByName);
 
         // Add options to the dropdown
         List<Dropdown.OptionData> options = new List<Dropdown.OptionData>();
 
-        foreach(ItemData item in items)
+        foreach(ItemDataBase item in items)
         {
-            options.Add(new Dropdown.OptionData(item.name, item.sprite));
+            //options.Add(new Dropdown.OptionData(item.name, item.sprite));
         }
         itemDropdown.AddOptions(options);
 
@@ -40,7 +40,7 @@ public class ItemCreator : MonoBehaviour {
         CreateItem(items[i - 1]);
     }
 
-    public void CreateItem(ItemData item)
+    public void CreateItem(ItemDataBase item)
     {
         Instantiate(itemPrefab);
     }

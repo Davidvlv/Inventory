@@ -37,7 +37,7 @@ public class ItemSlot : MonoBehaviour {
 
         // stick item to mouse
         Vector3 mousePos = cam.ScreenToWorldPoint(Input.mousePosition + new Vector3(0, 0, 10)); // need to specify z for some reason
-        mousePos.z = -0.5f;
+        mousePos.z = -1f;
         item.transform.position = mousePos - offset;
 
         // move item in front of all inventories

@@ -4,11 +4,11 @@ public class Item : MonoBehaviour {
 
     public GameObject itemUIClickPrefab;
 
-    public ItemData data;
+    public ItemDataBase data;
 
     public Vector2Int rootPos;
 
-    public SpriteRenderer spriteRenderer;
+    //public SpriteRenderer spriteRenderer;
 
     public Inventory inventory;
 
@@ -34,13 +34,13 @@ public class Item : MonoBehaviour {
         }
     }
 
-    public void Initialize(ItemData data, Vector2Int rootPos, Inventory inventory)
+    public void Initialize(ItemDataBase data, Vector2Int rootPos, Inventory inventory = null)
     {
         initialized = true;
 
         this.data = data;
-        spriteRenderer.sprite = data.sprite;
         name = data.name;
+        data.InitializeItem(this);
 
         this.rootPos = rootPos;
         this.inventory = inventory;
@@ -53,18 +53,14 @@ public class Item : MonoBehaviour {
 
     public void Place(Inventory inventory, Vector2Int position)
     {
-        rootPos = position;
         if (this.inventory)
         {
             RemoveFromInventory();
         }
 
-        // check if we are placing in a different inventory
-        if (this.inventory.gameObject != inventory.gameObject)
-        {
-            // swap inventories
-            this.inventory = inventory;
-        }
+        rootPos = position;
+
+        this.inventory = inventory;
 
         transform.parent = inventory.transform;
         SetLocalPosition();
