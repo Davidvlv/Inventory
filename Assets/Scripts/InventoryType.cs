@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 [CreateAssetMenuAttribute(fileName = "Inventory", menuName = "Inventory/Inventory", order = 1)]
 public class InventoryType : ScriptableObject {
 

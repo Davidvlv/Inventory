@@ -1,13 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor.Animations;
-
+﻿using UnityEngine;
 
 [CreateAssetMenuAttribute(fileName = "NewAnimatedItem", menuName = "Inventory/Item - Animated Sprite", order = 0)]
 public class ItemDataAnimatedSprite : ItemDataBase {
-
-    public AnimatorController controller;
+    
+    [SerializeField]
+    public RuntimeAnimatorController controller;
 
     public override void InitializeItem(Item item)
     {
@@ -17,6 +14,6 @@ public class ItemDataAnimatedSprite : ItemDataBase {
         spriteRenderer.sortingOrder = 1;
 
         Animator animator = item.gameObject.AddComponent<Animator>();
-        animator.runtimeAnimatorController = controller as RuntimeAnimatorController;
+        animator.runtimeAnimatorController = controller;
     }
 }

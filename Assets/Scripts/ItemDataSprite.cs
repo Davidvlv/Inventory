@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenuAttribute(fileName = "NewSpriteItem", menuName = "Inventory/Item - Sprite", order = 0)]
 public class ItemDataSprite : ItemDataBase {
