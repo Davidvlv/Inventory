@@ -16,19 +16,20 @@ public class Inventory : MonoBehaviour
 
     public uint height, width;
 
-    public bool closeOnEmpty { get; private set; }
+    //public bool closeOnEmpty { get; private set; }
     public bool destroyOnClose { get; private set; }
     
     private Dictionary<Vector2Int, Item> itemGrid = new Dictionary<Vector2Int, Item>();
 
-    internal void Initialize(InventoryType type, uint height, uint width, string name, bool closeOnEmpty, bool destroyOnClose)
+    internal void Initialize(InventoryType type, uint height, uint width, string name, bool destroyOnClose)
     {
         this.type = type;
         this.height = height;
         this.width = width;
         this.name = name;
-        this.closeOnEmpty = closeOnEmpty;
-        this.destroyOnClose = closeOnEmpty ? true : destroyOnClose; // if it's closeOnEmpty, then it must be destroyOnClose
+        //this.closeOnEmpty = closeOnEmpty;
+        //this.destroyOnClose = closeOnEmpty ? true : destroyOnClose; // if it's closeOnEmpty, then it must be destroyOnClose
+        this.destroyOnClose = destroyOnClose;
 
         this.closeButton.sprite = type.closeButton;
         this.closeButton.spriteDown = type.closeButtonDown;
@@ -166,10 +167,10 @@ public class Inventory : MonoBehaviour
             Destroy(item.gameObject);
         }
 
-        if (itemGrid.Count == 0 && closeOnEmpty)
-        {
-            InventoryManager.instance.DestroyInventory(this);
-        }
+        //if (itemGrid.Count == 0 && closeOnEmpty)
+        //{
+        //    InventoryManager.instance.DestroyInventory(this);
+        //}
 
     }
 

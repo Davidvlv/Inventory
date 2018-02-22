@@ -106,6 +106,10 @@ public class InventoryManager : MonoBehaviour
         // try place item in each inventory (ordered front to back)
         for (int i = inventories.Count - 1; i >= 0; i--)
         {
+            if (!inventories[i].isActiveAndEnabled)
+            {
+                continue;
+            }
             if (!inventories[i].InRange(worldPosition))
             {
                 continue;
@@ -124,7 +128,7 @@ public class InventoryManager : MonoBehaviour
         return TryPlaceItem(item, worldPosition, ref unused);
     }
 
-    public Inventory NewInventory(Vector3 worldPosition, uint width, uint height, string name = "Inventory", InventoryType type = null, bool closeOnEmpty = true, bool closeable = true)
+    public Inventory NewInventory(Vector3 worldPosition, uint width, uint height, string name = "Inventory", InventoryType type = null, bool destroyOnClose = true)
     {
         if (!type)
         {
@@ -134,7 +138,7 @@ public class InventoryManager : MonoBehaviour
         GameObject obj = Instantiate(inventoryPrefab, transform);
         obj.transform.position = new Vector3(worldPosition.x - width/2, worldPosition.y - height/2);
         Inventory inventory = obj.GetComponent<Inventory>();
-        inventory.Initialize(type, width, height, name, closeOnEmpty, closeable);
+        inventory.Initialize(type, width, height, name, destroyOnClose);
 
         AddInventory(inventory);
 
