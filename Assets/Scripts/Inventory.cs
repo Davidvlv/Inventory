@@ -12,20 +12,26 @@ public class Inventory : MonoBehaviour
     public TilemapRenderer tRenderer;
     public InventoryDrag topbar;
     BoxCollider2D box;
-    private BoxCollider2D dragCollider;
+    public InventoryClose closeButton;
 
     public uint height, width;
 
-    private bool dragMouse;
+    public bool closeOnEmpty { get; private set; }
+    public bool destroyOnClose { get; private set; }
     
     private Dictionary<Vector2Int, Item> itemGrid = new Dictionary<Vector2Int, Item>();
 
-    internal void Initialize(InventoryType type, uint height, uint width, string name)
+    internal void Initialize(InventoryType type, uint height, uint width, string name, bool closeOnEmpty, bool destroyOnClose)
     {
         this.type = type;
         this.height = height;
         this.width = width;
         this.name = name;
+        this.closeOnEmpty = closeOnEmpty;
+        this.destroyOnClose = closeOnEmpty ? true : destroyOnClose; // if it's closeOnEmpty, then it must be destroyOnClose
+
+        this.closeButton.sprite = type.closeButton;
+        this.closeButton.spriteDown = type.closeButtonDown;
     }
 
     private void Start()
@@ -59,6 +65,9 @@ public class Inventory : MonoBehaviour
         topbar.topCollider.offset = new Vector2((width + type.paddingLeft - type.paddingRight) / 2,
                                         height + type.paddingTop / 2);
         topbar.topCollider.edgeRadius = type.edgeRadius;
+
+        // close button
+        closeButton.transform.localPosition = new Vector3(width - type.closeButtonPaddingRight, height - type.closeButtonPaddingTop, -0.2f);
     }
 
     public void Resize(uint width, uint height)
@@ -156,22 +165,29 @@ public class Inventory : MonoBehaviour
         {
             Destroy(item.gameObject);
         }
-    }
 
-    public void RemoveItem(Item item)
-    {
-        if (!ContainsItem(item))
+        if (itemGrid.Count == 0 && closeOnEmpty)
         {
-            return;
+            InventoryManager.instance.DestroyInventory(this);
         }
 
-        if (!itemGrid.ContainsKey(item.rootPos))
-        {
-            throw (new System.Exception("Item rootPos does not align with the inventory position"));
-        }
-
-        itemGrid.Remove(item.rootPos);
     }
+
+    // needs to route to above function
+    //public void RemoveItem(Item item)
+    //{
+    //    if (!ContainsItem(item))
+    //    {
+    //        return;
+    //    }
+
+    //    if (!itemGrid.ContainsKey(item.rootPos))
+    //    {
+    //        throw (new System.Exception("Item rootPos does not align with the inventory position"));
+    //    }
+
+    //    itemGrid.Remove(item.rootPos);
+    //}
 
     public bool ContainsItem(Item item)
     {

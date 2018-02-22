@@ -42,7 +42,6 @@ public class ItemCreator : MonoBehaviour {
 
     public void SelectItem(int i)
     {
-        Debug.Log(i);
         // everything!
         if (i > items.Count)
         {

@@ -5,14 +5,14 @@ using UnityEngine;
 public class MyInventory : MonoBehaviour {
     InventoryManager iManager;
 
-    public InventoryType mainInventory;
-    
-	void Start () {
+
+    void Start () {
         iManager = InventoryManager.instance;
 
         // setup
-        iManager.NewInventory(new Vector3(0, 0), 6, 4, "My Backpack", mainInventory);
-	}
+        iManager.NewInventory(new Vector3(0, 0), 6, 4, "Main Inventory", null, false, false);
+        iManager.NewInventory(new Vector3(5, 0), 3, 3, "Another Inventory", null, false, false);
+    }
 	
 	void Update () {
 		

@@ -8,5 +8,7 @@ public class InventoryType : ScriptableObject {
     public float paddingLeft, paddingRight, paddingTop, paddingBottom;
     public float edgeRadius;
 
-    public bool closeable;
+    public Sprite closeButton;
+    public Sprite closeButtonDown;
+    public float closeButtonPaddingRight, closeButtonPaddingTop;
 }

@@ -21,11 +21,24 @@ public class InventoryManager : MonoBehaviour
 
     public GameObject inventoryPrefab;
     public GameObject itemPrefab;
+
     public InventoryType defaultType;
 
     [SerializeField]
     List<Inventory> inventories = new List<Inventory>();
     // #TODO close inventories
+
+    private void Update()
+    {
+        // temp show all hidden inventories
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            foreach(Inventory inventory in inventories)
+            {
+                inventory.gameObject.SetActive(true);
+            }
+        }
+    }
 
     /// <summary>
     /// Brings an inventory to the front of the screen
@@ -56,25 +69,36 @@ public class InventoryManager : MonoBehaviour
 
     public void AddInventory(Inventory inventory, bool closeable = true)
     {
+        // can't add an inventory twice
+        if (inventories.Contains(inventory))
+        {
+            return;
+        }
+
         inventories.Add(inventory);
         OrderZ();
     }
 
-    private bool PackItem(Item item, Inventory inventory)
+    public void DestroyInventory(Inventory inventory)
     {
-        bool placed = false;
-        for (int i = 0; i < inventory.width; i++)
+        if (!inventories.Contains(inventory))
         {
-            for (int j = 0; j < inventory.height; j++)
-            {
-                placed = inventory.TryPlaceItem(item, new Vector2Int(i, j));
-                if (placed)
-                {
-                    return true;
-                }
-            }
+            throw (new System.Exception("Trying to destroy an inventory that isn't listed in the Inventory Manager - how did this happen?"));
         }
-        return false;
+        inventories.Remove(inventory);
+        Destroy(inventory.gameObject);
+    }
+
+    public void Close(Inventory inventory)
+    {
+        if (inventory.destroyOnClose)
+        {
+            DestroyInventory(inventory);
+            return;
+        }
+
+        // hide the inventory
+        inventory.gameObject.SetActive(false);
     }
 
     public Inventory TryPlaceItem(Item item, Vector3 worldPosition, ref Vector2Int placedPosition)
@@ -100,13 +124,7 @@ public class InventoryManager : MonoBehaviour
         return TryPlaceItem(item, worldPosition, ref unused);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="worldPosition">The world position of the middle of the new inventory</param>
-    /// <param name="inventory">The inventory type to </param>
-    /// <returns></returns>
-    public Inventory NewInventory(Vector3 worldPosition, uint width, uint height, string name = "Inventory", InventoryType type = null)
+    public Inventory NewInventory(Vector3 worldPosition, uint width, uint height, string name = "Inventory", InventoryType type = null, bool closeOnEmpty = true, bool closeable = true)
     {
         if (!type)
         {
@@ -116,18 +134,23 @@ public class InventoryManager : MonoBehaviour
         GameObject obj = Instantiate(inventoryPrefab, transform);
         obj.transform.position = new Vector3(worldPosition.x - width/2, worldPosition.y - height/2);
         Inventory inventory = obj.GetComponent<Inventory>();
-        inventory.Initialize(type, width, height, name);
+        inventory.Initialize(type, width, height, name, closeOnEmpty, closeable);
 
         AddInventory(inventory);
 
         return inventory;
     }
 
-    public void NewInventoryWithItems(List<ItemDataBase> items)
+    public void NewInventoryWithItems(List<ItemDataBase> items, string name = "Inventory", InventoryType type = null)
     {
+        if (items.Count == 0)
+        {
+            return;
+        }
+
         bool incrementHeightOrWidth = false;
         uint height = 1, width = 1;
-        Inventory newInventory = NewInventory(Vector3.zero, width, height);
+        Inventory newInventory = NewInventory(Vector3.zero, width, height, name, type);
 
         // biggest to smallest for best packing
         items.Sort(ItemDataBase.SortBySize);
@@ -163,5 +186,22 @@ public class InventoryManager : MonoBehaviour
             }
 
         }
+    }
+
+    private bool PackItem(Item item, Inventory inventory)
+    {
+        bool placed = false;
+        for (int i = 0; i < inventory.width; i++)
+        {
+            for (int j = 0; j < inventory.height; j++)
+            {
+                placed = inventory.TryPlaceItem(item, new Vector2Int(i, j));
+                if (placed)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
