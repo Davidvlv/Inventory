@@ -10,7 +10,7 @@ public class Item : MonoBehaviour {
 
     //public SpriteRenderer spriteRenderer;
 
-    public Inventory inventory;
+    public Inventory placedInventory;
 
     [SerializeField]
     private bool initialized;
@@ -34,7 +34,7 @@ public class Item : MonoBehaviour {
         }
     }
 
-    public void Initialize(ItemDataBase data, Vector2Int rootPos, Inventory inventory = null)
+    public void Initialize(ItemDataBase data, Vector2Int rootPos, Inventory placedInventory = null)
     {
         initialized = true;
 
@@ -43,24 +43,24 @@ public class Item : MonoBehaviour {
         data.InitializeItem(this);
 
         this.rootPos = rootPos;
-        this.inventory = inventory;
+        this.placedInventory = placedInventory;
     }
 
     public void RemoveFromInventory()
     {
-        inventory.RemoveItem(rootPos);
+        placedInventory.RemoveItem(rootPos);
     }
 
     public void Place(Inventory inventory, Vector2Int position)
     {
-        if (this.inventory)
+        if (this.placedInventory)
         {
             RemoveFromInventory();
         }
 
         rootPos = position;
 
-        this.inventory = inventory;
+        this.placedInventory = inventory;
 
         transform.parent = inventory.transform;
         SetLocalPosition();
@@ -69,5 +69,10 @@ public class Item : MonoBehaviour {
     public void SetLocalPosition()
     {
         transform.localPosition = offset + new Vector3(rootPos.x, rootPos.y, -0.5f);
+    }
+
+    public virtual void Interact()
+    {
+
     }
 }

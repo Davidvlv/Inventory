@@ -2,6 +2,7 @@
 
 [CreateAssetMenuAttribute(fileName = "NewSpriteItem", menuName = "Inventory/Item - Sprite", order = 0)]
 public class ItemDataSprite : ItemDataBase {
+    
     public Sprite sprite;
 
     public override void InitializeItem(Item item)

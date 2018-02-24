@@ -23,6 +23,14 @@ public class ItemSlot : MonoBehaviour {
         transform.Translate(this.offset + halfSquare);
     }
 
+    private void OnMouseOver()
+    {
+        // Right Click
+        if(Input.GetMouseButtonDown(1)){
+            item.Interact();
+        }
+    }
+
     private void OnMouseDown()
     {
         isDragged = true;

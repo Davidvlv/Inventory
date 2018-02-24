@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Torch
   m_EditorClassIdentifier: 
   name: Torch
+  isBag: 0
   inventoryShape:
   - {x: 0, y: 0}
   - {x: 0, y: 1}

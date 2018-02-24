@@ -15,6 +15,7 @@ public class ItemDataBase : ScriptableObject
     }
 
     public new string name;
+    public bool isBag;
 
     // Bottom Left Corner is (0, 0)
     public List<Vector2Int> inventoryShape;
