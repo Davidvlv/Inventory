@@ -90,7 +90,7 @@ public class Inventory : MonoBehaviour
             throw (new System.Exception("Invalid item, item must have a gameobject"));
         }
         // check if item fits
-        foreach (Vector2Int slotOffset in item.data.inventoryShape)
+        foreach (Vector2Int slotOffset in item.data.slotPositions)
         {
             Vector2Int slotPos = position + slotOffset;
 
@@ -117,7 +117,7 @@ public class Inventory : MonoBehaviour
         item.Place(this, position);
 
         // map each position in the grid to the item
-        foreach (Vector2Int slotOffset in item.data.inventoryShape)
+        foreach (Vector2Int slotOffset in item.data.slotPositions)
         {
             itemGrid.Add(position + slotOffset, item);
         }
@@ -156,7 +156,7 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-        foreach (Vector2Int itemPos in item.data.inventoryShape)
+        foreach (Vector2Int itemPos in item.data.slotPositions)
         {
             itemGrid.Remove(position + itemPos);
         }

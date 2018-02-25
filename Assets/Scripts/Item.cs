@@ -2,9 +2,7 @@
 
 public class Item : MonoBehaviour {
 
-    public GameObject itemUIClickPrefab;
-
-    public ItemDataBase data;
+    public ItemData data;
 
     public Vector2Int rootPos;
 
@@ -25,22 +23,20 @@ public class Item : MonoBehaviour {
         }
 
         // Make grab points
-        foreach(Vector2Int position in data.inventoryShape)
+        foreach(Vector2Int slotPosition in data.slotPositions)
         {
-            GameObject UIClicker = Instantiate(itemUIClickPrefab, transform);
-            ItemSlot slot = UIClicker.GetComponent<ItemSlot>();
-            slot.Initialize(this, position);
-
+            GameObject UIClicker = new GameObject("Item Slot");
+            ItemSlot slot = UIClicker.AddComponent<ItemSlot>();
+            slot.Initialize(this, slotPosition);
         }
     }
 
-    public void Initialize(ItemDataBase data, Vector2Int rootPos, Inventory placedInventory = null)
+    public void Initialize(ItemData data, Vector2Int rootPos, Inventory placedInventory = null)
     {
         initialized = true;
 
         this.data = data;
         name = data.name;
-        data.InitializeItem(this);
 
         this.rootPos = rootPos;
         this.placedInventory = placedInventory;

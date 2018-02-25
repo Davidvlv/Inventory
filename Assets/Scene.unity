@@ -1002,7 +1002,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryPrefab: {fileID: 1880615737841952, guid: dd4f4469c55274443b054b7d5f6629a8,
     type: 2}
-  itemPrefab: {fileID: 1487724996366120, guid: 56b3cfee5edf8c94392106266e5ebec0, type: 2}
   defaultType: {fileID: 11400000, guid: b8d936449830c6c42888cc70fb811d95, type: 2}
   inventories: []
 --- !u!1 &1049847351
@@ -1518,6 +1517,7 @@ MonoBehaviour:
   itemPrefab: {fileID: 0}
   createInventory: {fileID: 0}
   itemDropdown: {fileID: 967958098}
+  greenInventory: {fileID: 11400000, guid: 28af8e24f2d8d364aa8eee474fb9dabf, type: 2}
 --- !u!4 &1956514178
 Transform:
   m_ObjectHideFlags: 0

@@ -1,19 +1,21 @@
-﻿using UnityEngine;
+﻿//using UnityEngine;
 
-[CreateAssetMenuAttribute(fileName = "NewAnimatedItem", menuName = "Inventory/Item - Animated Sprite", order = 0)]
-public class ItemDataAnimatedSprite : ItemDataBase {
+//[CreateAssetMenuAttribute(fileName = "NewAnimatedItem", menuName = "Inventory/Item - Animated Sprite", order = 0)]
+//public class ItemDataAnimatedSprite : ItemData {
     
-    [SerializeField]
-    public RuntimeAnimatorController controller;
+//    [SerializeField]
+//    public RuntimeAnimatorController controller;
 
-    public override void InitializeItem(Item item)
-    {
-        base.InitializeItem(item);
+//    public override Item CreateItem(GameObject itemObject)
+//    {
+//        Item item = base.CreateItem(itemObject);
 
-        SpriteRenderer spriteRenderer = item.gameObject.AddComponent<SpriteRenderer>();
-        spriteRenderer.sortingOrder = 1;
+//        SpriteRenderer spriteRenderer = item.gameObject.AddComponent<SpriteRenderer>();
+//        spriteRenderer.sortingOrder = 1;
 
-        Animator animator = item.gameObject.AddComponent<Animator>();
-        animator.runtimeAnimatorController = controller;
-    }
-}
+//        Animator animator = item.gameObject.AddComponent<Animator>();
+//        animator.runtimeAnimatorController = controller;
+
+//        return item;
+//    }
+//}

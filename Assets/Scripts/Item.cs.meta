@@ -1,11 +1,15 @@
 fileFormatVersion: 2
 guid: 06d53e91a43cfc445955c3a10bea4c59
-timeCreated: 1517900271
+timeCreated: 1519537712
 licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - itemUIClickPrefab: {fileID: 1630263650031626, guid: bb3ae5d4912177e4b872c565ab764b46,
+      type: 2}
+  - data: {instanceID: 0}
+  - placedInventory: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

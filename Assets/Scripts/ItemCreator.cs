@@ -4,12 +4,14 @@ using UnityEngine.UI;
 
 public class ItemCreator : MonoBehaviour {
 
-    private List<ItemDataBase> items = new List<ItemDataBase>();
+    private List<ItemData> items = new List<ItemData>();
 
     public GameObject itemPrefab;
     public Inventory createInventory;
 
     public Dropdown itemDropdown;
+
+    public InventoryType greenInventory;
 
     private InventoryManager iManager;
 
@@ -21,16 +23,16 @@ public class ItemCreator : MonoBehaviour {
         
         foreach(Object obj in objs)
         {
-            items.Add((ItemDataBase)obj);
+            items.Add((ItemData)obj);
         }
 
         // sort by name
-        items.Sort(ItemDataBase.SortByName);
+        items.Sort(ItemData.SortByName);
 
         // Add options to the dropdown
         List<Dropdown.OptionData> options = new List<Dropdown.OptionData>();
 
-        foreach(ItemDataBase item in items)
+        foreach(ItemData item in items)
         {
             options.Add(new Dropdown.OptionData(item.name));
         }
@@ -45,11 +47,11 @@ public class ItemCreator : MonoBehaviour {
         // everything!
         if (i > items.Count)
         {
-            iManager.NewInventoryWithItems(items);
+            iManager.NewInventoryWithItems(items, "New Items", greenInventory);
             return;
         }
         // option[0] is "Choose an item"
-        iManager.NewInventoryWithItems(new List<ItemDataBase>() { items[i - 1] });
+        iManager.NewInventoryWithItems(new List<ItemData>() { items[i - 1] }, "New Items", greenInventory);
     }
 	
 

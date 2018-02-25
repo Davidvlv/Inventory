@@ -19,8 +19,15 @@ public class ItemSlot : MonoBehaviour {
     public void Initialize(Item item, Vector2Int offset)
     {
         this.item = item;
-        this.offset = new Vector3(offset.x, offset.y, 0);// + halfSquare;
-        transform.Translate(this.offset + halfSquare);
+        transform.parent = item.transform;
+
+        // add collider
+        BoxCollider2D col = gameObject.AddComponent<BoxCollider2D>();
+        col.isTrigger = true;
+        //col.offset = -halfSquare;
+
+        this.offset = new Vector3(offset.x, offset.y, 0);
+        transform.localPosition = (this.offset);
     }
 
     private void OnMouseOver()

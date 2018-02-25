@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class TestSetup : MonoBehaviour {
 
-    public List<ItemDataBase> items = new List<ItemDataBase>();
+    public List<ItemData> items = new List<ItemData>();
 
     InventoryManager iManager;
 

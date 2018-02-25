@@ -3,13 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemBag : Item {
+    InventoryManager iManager;
 
     public Inventory childInventory;
+
+    public void Awake()
+    {
+        iManager = InventoryManager.instance;
+    }
 
     public override void Interact()
     {
         base.Interact();
-
-        Debug.Log("I'M A BAG");
+        placedInventory.RemoveItem(rootPos, true);
+        Debug.Log("I'm a bag!!!!!");
+        //iManager.
     }
 }

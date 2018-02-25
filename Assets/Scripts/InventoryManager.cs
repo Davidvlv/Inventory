@@ -19,7 +19,6 @@ public class InventoryManager : MonoBehaviour
     #endregion
 
     public GameObject inventoryPrefab;
-    public GameObject itemPrefab;
 
     public InventoryType defaultType;
 
@@ -100,6 +99,16 @@ public class InventoryManager : MonoBehaviour
         inventory.gameObject.SetActive(false);
     }
 
+    public void Open(Inventory inventory)
+    {
+        if (!inventories.Contains(inventory))
+        {
+            throw (new System.Exception("Trying to open an inventory that isn't listed in the Inventory Manager - how did this happen?"));
+        }
+
+        //inventory. 
+    }
+
     public Inventory TryPlaceItem(Item item, Vector3 worldPosition, ref Vector2Int placedPosition)
     {
         // try place item in each inventory (ordered front to back)
@@ -144,8 +153,9 @@ public class InventoryManager : MonoBehaviour
         return inventory;
     }
 
-    public void NewInventoryWithItems(List<ItemDataBase> items, string name = "Inventory", InventoryType type = null)
+    public void NewInventoryWithItems(List<ItemData> items, string name = "Inventory", InventoryType type = null)
     {
+        List<ItemData> createItems = new List<ItemData>(items);
         if (items.Count == 0)
         {
             return;
@@ -156,11 +166,12 @@ public class InventoryManager : MonoBehaviour
         Inventory newInventory = NewInventory(Vector3.zero, width, height, name, type);
 
         // biggest to smallest for best packing
-        items.Sort(ItemDataBase.SortBySize);
+        createItems.Sort(ItemData.SortBySize);
 
-        foreach (ItemDataBase data in items)
+        foreach (ItemData data in createItems)
         {
-            Item item = Instantiate(itemPrefab).GetComponent<Item>();
+            GameObject itemObject = new GameObject(data.name);
+            Item item = data.CreateItem(itemObject);
             item.Initialize(data, new Vector2Int(0, 0));
 
             // try place item in each slot
