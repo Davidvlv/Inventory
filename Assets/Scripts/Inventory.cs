@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -7,25 +8,24 @@ using UnityEngine.Tilemaps;
 public class Inventory : MonoBehaviour
 {
     public InventoryType type;
+    public InventoryData data;
+
     public Tilemap tilemap;
     public TilemapRenderer tRenderer;
     public InventoryDrag topbar;
     BoxCollider2D box;
     public InventoryClose closeButton;
 
-    public uint height, width;
-
     //public bool closeOnEmpty { get; private set; }
     public bool destroyOnClose { get; private set; }
     
     private Dictionary<Vector2Int, Item> itemGrid = new Dictionary<Vector2Int, Item>();
 
-    internal void Initialize(InventoryType type, uint height, uint width, string name, bool destroyOnClose)
+    internal void Initialize(InventoryType type, InventoryData data)
     {
         this.type = type;
-        this.height = height;
-        this.width = width;
-        this.name = name;
+        this.data = data;
+        this.name = data.name;
         //this.closeOnEmpty = closeOnEmpty;
         //this.destroyOnClose = closeOnEmpty ? true : destroyOnClose; // if it's closeOnEmpty, then it must be destroyOnClose
         this.destroyOnClose = destroyOnClose;
@@ -43,9 +43,9 @@ public class Inventory : MonoBehaviour
     public void CreateUI()
     {
         tilemap.ClearAllTiles();
-        for (int i = -1; i <= width; i++)
+        for (int i = -1; i <= data.width; i++)
         {
-            for (int j = -1; j <= height; j++)
+            for (int j = -1; j <= data.height; j++)
             {
                 tilemap.SetTile(new Vector3Int(i, j, 0), type.ruleTile);
             }
@@ -53,28 +53,33 @@ public class Inventory : MonoBehaviour
 
         // Set collider properties
         box = GetComponent<BoxCollider2D>();
-        box.size = new Vector2(width + type.paddingLeft + type.paddingRight - type.edgeRadius * 2, 
-                                height + type.paddingTop + type.paddingBottom - type.edgeRadius * 2);
-        box.offset = new Vector2((width + type.paddingLeft - type.paddingRight) / 2, 
-                                  (height + type.paddingTop - type.paddingBottom) / 2);
+        box.size = new Vector2(data.width + type.paddingLeft + type.paddingRight - type.edgeRadius * 2, 
+                                data.height + type.paddingTop + type.paddingBottom - type.edgeRadius * 2);
+        box.offset = new Vector2((data.width + type.paddingLeft - type.paddingRight) / 2, 
+                                  (data.height + type.paddingTop - type.paddingBottom) / 2);
         box.edgeRadius = type.edgeRadius;
 
         // Set topbar collider properties
-        topbar.topCollider.size = new Vector2(width + type.paddingLeft + type.paddingRight - type.edgeRadius * 2,
+        topbar.topCollider.size = new Vector2(data.width + type.paddingLeft + type.paddingRight - type.edgeRadius * 2,
                                 type.paddingTop - type.edgeRadius * 2);
-        topbar.topCollider.offset = new Vector2((width + type.paddingLeft - type.paddingRight) / 2,
-                                        height + type.paddingTop / 2);
+        topbar.topCollider.offset = new Vector2((data.width + type.paddingLeft - type.paddingRight) / 2,
+                                        data.height + type.paddingTop / 2);
         topbar.topCollider.edgeRadius = type.edgeRadius;
 
         // close button
-        closeButton.transform.localPosition = new Vector3(width - type.closeButtonPaddingRight, height - type.closeButtonPaddingTop, -0.2f);
+        closeButton.transform.localPosition = new Vector3(data.width - type.closeButtonPaddingRight, data.height - type.closeButtonPaddingTop, -0.2f);
     }
 
     public void Resize(uint width, uint height)
     {
-        this.width = width;
-        this.height = height;
+        this.data.height = width;
+        this.data.width = height;
         CreateUI();
+    }
+
+    public virtual bool CanHold(Item item)
+    {
+        return true;
     }
 
     /// <summary>
@@ -114,7 +119,10 @@ public class Inventory : MonoBehaviour
         }
         
         // place item - all item positions are clear
-        item.Place(this, position);
+        if (!item.Place(this, position))
+        {
+            return false;
+        }
 
         // map each position in the grid to the item
         foreach (Vector2Int slotOffset in item.data.slotPositions)
@@ -138,7 +146,7 @@ public class Inventory : MonoBehaviour
 
     public bool InRange(Vector2Int slotPosition)
     {
-        return (slotPosition.x >= 0 && slotPosition.y >= 0 && slotPosition.x < width && slotPosition.y < height);
+        return (slotPosition.x >= 0 && slotPosition.y >= 0 && slotPosition.x < data.height && slotPosition.y < data.width);
     }
 
     public bool InRange(Vector3 worldPoint)
@@ -208,9 +216,9 @@ public class Inventory : MonoBehaviour
 
     public virtual void Destroy()
     {
-        for (int i = 0; i < width; i++)
+        for (int i = 0; i < data.height; i++)
         {
-            for (int j = 0; j < height; j++)
+            for (int j = 0; j < data.width; j++)
             {
                 RemoveItem(i, j, true);
             }

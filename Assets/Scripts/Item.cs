@@ -47,7 +47,7 @@ public class Item : MonoBehaviour {
         placedInventory.RemoveItem(rootPos);
     }
 
-    public void Place(Inventory inventory, Vector2Int position)
+    public virtual bool Place(Inventory inventory, Vector2Int position)
     {
         if (this.placedInventory)
         {
@@ -60,6 +60,8 @@ public class Item : MonoBehaviour {
 
         transform.parent = inventory.transform;
         SetLocalPosition();
+
+        return true;
     }
 
     public void SetLocalPosition()

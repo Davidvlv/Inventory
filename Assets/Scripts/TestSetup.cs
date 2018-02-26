@@ -12,9 +12,9 @@ public class TestSetup : MonoBehaviour {
     {
         iManager = InventoryManager.instance;
 
-        iManager.NewInventory(new Vector3(-12, 0), 2, 2);
-        iManager.NewInventory(new Vector3(5, 0), 5, 4);
-        iManager.NewInventoryWithItems(items);
+        //iManager.NewInventory(new Vector3(-12, 0), 2, 2);
+        //iManager.NewInventory(new Vector3(5, 0), 5, 4);
+        //iManager.NewInventoryWithItems(items);
 
         //iManager.TryPlaceItem(testBoomerang, new Vector3(-1.213f, -4.798f, 0));
         //iManager.TryPlaceItem(testCoin, new Vector3(4.5f, 4.5f, 0));

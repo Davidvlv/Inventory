@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
@@ -21,6 +22,7 @@ public class InventoryManager : MonoBehaviour
     public GameObject inventoryPrefab;
 
     public InventoryType defaultType;
+    public InventoryData defaultData;
 
     [SerializeField]
     List<Inventory> inventories = new List<Inventory>();
@@ -137,24 +139,28 @@ public class InventoryManager : MonoBehaviour
         return TryPlaceItem(item, worldPosition, ref unused);
     }
 
-    public Inventory NewInventory(Vector3 worldPosition, uint width, uint height, string name = "Inventory", InventoryType type = null, bool destroyOnClose = true)
+    public Inventory NewInventory(Vector3 worldPosition, InventoryData data, InventoryType type = null)
     {
         if (!type)
         {
             type = defaultType;
         }
+        if (!data)
+        {
+            data = defaultData;
+        }
 
         GameObject obj = Instantiate(inventoryPrefab, transform);
-        obj.transform.position = new Vector3(worldPosition.x - width/2, worldPosition.y - height/2);
+        obj.transform.position = new Vector3(worldPosition.x - data.width/2, worldPosition.y - data.height/2);
         Inventory inventory = obj.GetComponent<Inventory>();
-        inventory.Initialize(type, width, height, name, destroyOnClose);
+        inventory.Initialize(type, data);
 
         AddInventory(inventory);
 
         return inventory;
     }
 
-    public void NewInventoryWithItems(List<ItemData> items, string name = "Inventory", InventoryType type = null)
+    public void NewInventoryWithItems(List<ItemData> items, InventoryData data = null, InventoryType type = null)
     {
         // clone the list as to not change it
         List<ItemData> createItems = new List<ItemData>(items);
@@ -165,16 +171,16 @@ public class InventoryManager : MonoBehaviour
 
         bool incrementHeightOrWidth = false;
         uint height = 1, width = 1;
-        Inventory newInventory = NewInventory(Vector3.zero, width, height, name, type);
+        Inventory newInventory = NewInventory(Vector3.zero, data, type);
 
         // biggest to smallest for best packing
         createItems.Sort(ItemData.SortBySize);
 
-        foreach (ItemData data in createItems)
+        foreach (ItemData itemData in createItems)
         {
-            GameObject itemObject = new GameObject(data.name);
-            Item item = data.CreateItem(itemObject);
-            item.Initialize(data, new Vector2Int(0, 0));
+            GameObject itemObject = new GameObject(itemData.name);
+            Item item = itemData.CreateItem(itemObject);
+            item.Initialize(itemData, new Vector2Int(0, 0));
 
             // try place item in each slot
             bool placed = false;
@@ -204,12 +210,19 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    public void NewInventoryWithItems(List<ItemData> items, string name = "Inventory", InventoryType type = null)
+    {
+        InventoryData data = defaultData;
+        data.name = name;
+        NewInventoryWithItems(items, data, type);
+    }
+
     private bool PackItem(Item item, Inventory inventory)
     {
         bool placed = false;
-        for (int i = 0; i < inventory.width; i++)
+        for (int i = 0; i < inventory.data.height; i++)
         {
-            for (int j = 0; j < inventory.height; j++)
+            for (int j = 0; j < inventory.data.width; j++)
             {
                 placed = inventory.TryPlaceItem(item, new Vector2Int(i, j));
                 if (placed)

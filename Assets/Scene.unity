@@ -256,6 +256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0464082455ee5114aaa9634464f40273, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainInventory: {fileID: 11400000, guid: 815da2d97ea109f4c9f431d2126f5dcf, type: 2}
 --- !u!4 &275004921
 Transform:
   m_ObjectHideFlags: 0
@@ -1003,6 +1004,7 @@ MonoBehaviour:
   inventoryPrefab: {fileID: 1880615737841952, guid: dd4f4469c55274443b054b7d5f6629a8,
     type: 2}
   defaultType: {fileID: 11400000, guid: b8d936449830c6c42888cc70fb811d95, type: 2}
+  defaultData: {fileID: 0}
   inventories: []
 --- !u!1 &1049847351
 GameObject:

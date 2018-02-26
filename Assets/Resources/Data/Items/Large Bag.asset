@@ -19,7 +19,7 @@ MonoBehaviour:
   - {x: 1, y: 1}
   type: 1
   bagInventoryData: {fileID: 11400000, guid: b07dd18bd682bc246bde76a664bb6d15, type: 2}
-  bagInventoryType: {fileID: 11400000, guid: 28af8e24f2d8d364aa8eee474fb9dabf, type: 2}
+  bagInventoryType: {fileID: 11400000, guid: b8d936449830c6c42888cc70fb811d95, type: 2}
   render: 0
   sprite: {fileID: 21300008, guid: 1a980dd3545b1e24a8564893e2372fc6, type: 3}
   controller: {fileID: 0}
