@@ -22,7 +22,6 @@ public class InventoryManager : MonoBehaviour
     public GameObject inventoryPrefab;
 
     public InventoryType defaultType;
-    public InventoryData defaultData;
 
     [SerializeField]
     List<Inventory> inventories = new List<Inventory>();
@@ -147,7 +146,7 @@ public class InventoryManager : MonoBehaviour
         }
         if (!data)
         {
-            data = defaultData;
+            data = new InventoryData("New Inventory", 1, 1);
         }
 
         GameObject obj = Instantiate(inventoryPrefab, transform);
@@ -212,8 +211,7 @@ public class InventoryManager : MonoBehaviour
 
     public void NewInventoryWithItems(List<ItemData> items, string name = "Inventory", InventoryType type = null)
     {
-        InventoryData data = defaultData;
-        data.name = name;
+        InventoryData data = new InventoryData(name, 1, 1);
         NewInventoryWithItems(items, data, type);
     }
 

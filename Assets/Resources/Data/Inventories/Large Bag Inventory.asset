@@ -9,7 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c742bbcbb0d80fa4183c1f410b5e1af6, type: 3}
-  m_Name: InventoryData4x5empty
+  m_Name: Large Bag Inventory
   m_EditorClassIdentifier: 
+  name: Large Bag Inventory
   width: 4
   height: 5
+  wbListType: 0
+  wbList: []

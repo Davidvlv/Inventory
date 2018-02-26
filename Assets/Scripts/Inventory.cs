@@ -18,6 +18,9 @@ public class Inventory : MonoBehaviour
 
     //public bool closeOnEmpty { get; private set; }
     public bool destroyOnClose { get; private set; }
+
+    public WBListType wbListType;
+    public List<ItemData> wbList;
     
     private Dictionary<Vector2Int, Item> itemGrid = new Dictionary<Vector2Int, Item>();
 
@@ -146,7 +149,7 @@ public class Inventory : MonoBehaviour
 
     public bool InRange(Vector2Int slotPosition)
     {
-        return (slotPosition.x >= 0 && slotPosition.y >= 0 && slotPosition.x < data.height && slotPosition.y < data.width);
+        return (slotPosition.x >= 0 && slotPosition.y >= 0 && slotPosition.x < data.width && slotPosition.y < data.height);
     }
 
     public bool InRange(Vector3 worldPoint)
