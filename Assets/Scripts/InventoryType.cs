@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-[CreateAssetMenuAttribute(fileName = "Inventory", menuName = "Inventory/Inventory", order = 1)]
+[CreateAssetMenuAttribute(fileName = "InventoryType", menuName = "Inventory/Inventory Type", order = 1)]
 public class InventoryType : ScriptableObject {
 
     public RuleTile ruleTile;

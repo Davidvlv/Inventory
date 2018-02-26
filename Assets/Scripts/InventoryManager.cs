@@ -84,7 +84,7 @@ public class InventoryManager : MonoBehaviour
             throw (new System.Exception("Trying to destroy an inventory that isn't listed in the Inventory Manager - how did this happen?"));
         }
         inventories.Remove(inventory);
-        Destroy(inventory.gameObject);
+        inventory.Destroy();
     }
 
     public void Close(Inventory inventory)
@@ -106,7 +106,8 @@ public class InventoryManager : MonoBehaviour
             throw (new System.Exception("Trying to open an inventory that isn't listed in the Inventory Manager - how did this happen?"));
         }
 
-        //inventory. 
+        inventory.gameObject.SetActive(true);
+        SendToFront(inventory);
     }
 
     public Inventory TryPlaceItem(Item item, Vector3 worldPosition, ref Vector2Int placedPosition)
@@ -155,6 +156,7 @@ public class InventoryManager : MonoBehaviour
 
     public void NewInventoryWithItems(List<ItemData> items, string name = "Inventory", InventoryType type = null)
     {
+        // clone the list as to not change it
         List<ItemData> createItems = new List<ItemData>(items);
         if (items.Count == 0)
         {

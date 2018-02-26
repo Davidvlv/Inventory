@@ -33,6 +33,9 @@ public class ItemData : ScriptableObject
     [Header("Type")]
     public ItemType type;
     // type variables
+    // bag
+    public InventoryData bagInventoryData;
+    public InventoryType bagInventoryType;
 
     [Header("Rendering")]
     public RenderType render;

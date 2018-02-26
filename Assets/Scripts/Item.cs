@@ -15,7 +15,7 @@ public class Item : MonoBehaviour {
 
     private static Vector3 offset = new Vector3(0.5f, 0.5f, 0);
 
-    private void Start()
+    protected virtual void Start()
     {
         if (!initialized)
         {
@@ -31,7 +31,7 @@ public class Item : MonoBehaviour {
         }
     }
 
-    public void Initialize(ItemData data, Vector2Int rootPos, Inventory placedInventory = null)
+    public virtual void Initialize(ItemData data, Vector2Int rootPos, Inventory placedInventory = null)
     {
         initialized = true;
 
@@ -70,5 +70,10 @@ public class Item : MonoBehaviour {
     public virtual void Interact()
     {
 
+    }
+
+    public virtual void Destroy()
+    {
+        Destroy(gameObject);
     }
 }

@@ -13,6 +13,10 @@ public class ItemDataEditor : Editor
 
         //ShowOnEnum("type", "Type1", "type1Var"); //type1Var is only visible when type == Type1
         //ShowOnEnum("type", "Type2", "type2Var"); //type2Var is only visible when type == Type2
+
+        ShowOnEnum("type", "bag", "bagInventoryData");
+        ShowOnEnum("type", "bag", "bagInventoryType");
+
         ShowOnEnum("render", "sprite", "sprite");
         ShowOnEnum("render", "animated", "controller");
 

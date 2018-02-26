@@ -163,7 +163,7 @@ public class Inventory : MonoBehaviour
 
         if (destroyItem)
         {
-            Destroy(item.gameObject);
+            item.Destroy();
         }
 
         //if (itemGrid.Count == 0 && closeOnEmpty)
@@ -189,14 +189,14 @@ public class Inventory : MonoBehaviour
     //    itemGrid.Remove(item.rootPos);
     //}
 
+    public void RemoveItem(int x, int y, bool destroyItem = false)
+    {
+        RemoveItem(new Vector2Int(x, y), destroyItem);
+    }
+
     public bool ContainsItem(Item item)
     {
         return itemGrid.ContainsValue(item);
-    }
-
-    public void RemoveItem(int x, int y)
-    {
-        RemoveItem(new Vector2Int(x, y));
     }
 
     public void SetLayer(int x)
@@ -204,5 +204,17 @@ public class Inventory : MonoBehaviour
         Vector3 temp = transform.position;
         temp.z = -x;
         transform.position = temp;
+    }
+
+    public virtual void Destroy()
+    {
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                RemoveItem(i, j, true);
+            }
+        }
+        Destroy(gameObject);
     }
 }
