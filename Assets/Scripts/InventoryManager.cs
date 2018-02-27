@@ -138,7 +138,7 @@ public class InventoryManager : MonoBehaviour
         return TryPlaceItem(item, worldPosition, ref unused);
     }
 
-    public Inventory NewInventory(Vector3 worldPosition, InventoryData data, InventoryType type = null)
+    public Inventory NewInventory(Vector3 worldPosition, InventoryData data, bool destroyOnClose = true, InventoryType type = null)
     {
         if (!type)
         {
@@ -146,13 +146,16 @@ public class InventoryManager : MonoBehaviour
         }
         if (!data)
         {
-            data = new InventoryData("New Inventory", 1, 1);
+            data = ScriptableObject.CreateInstance<InventoryData>();
+            data.name = "New Inventory";
+            data.height = 1;
+            data.width = 1;
         }
 
         GameObject obj = Instantiate(inventoryPrefab, transform);
         obj.transform.position = new Vector3(worldPosition.x - data.width/2, worldPosition.y - data.height/2);
         Inventory inventory = obj.GetComponent<Inventory>();
-        inventory.Initialize(type, data);
+        inventory.Initialize(type, data, destroyOnClose);
 
         AddInventory(inventory);
 
@@ -170,7 +173,7 @@ public class InventoryManager : MonoBehaviour
 
         bool incrementHeightOrWidth = false;
         uint height = 1, width = 1;
-        Inventory newInventory = NewInventory(Vector3.zero, data, type);
+        Inventory newInventory = NewInventory(Vector3.zero, data, true, type);
 
         // biggest to smallest for best packing
         createItems.Sort(ItemData.SortBySize);
@@ -209,9 +212,16 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public void NewInventoryWithItems(List<ItemData> items, string name = "Inventory", InventoryType type = null)
+    public void NewInventoryWithItems(List<ItemData> items, string name, uint width, uint height, 
+        WBListType wbType = WBListType.whitelist, List<ItemData> wbList = null, InventoryType type = null)
     {
-        InventoryData data = new InventoryData(name, 1, 1);
+        InventoryData data = ScriptableObject.CreateInstance<InventoryData>();
+        data.name = name;
+        data.width = 1;
+        data.height = 1;
+        data.wbType = wbType;
+        data.wbList = wbList;
+
         NewInventoryWithItems(items, data, type);
     }
 

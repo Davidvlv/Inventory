@@ -17,14 +17,14 @@ public class Inventory : MonoBehaviour
     public InventoryClose closeButton;
 
     //public bool closeOnEmpty { get; private set; }
-    public bool destroyOnClose { get; private set; }
+    public bool destroyOnClose { get; protected set; }
 
     public WBListType wbListType;
     public List<ItemData> wbList;
     
-    private Dictionary<Vector2Int, Item> itemGrid = new Dictionary<Vector2Int, Item>();
+    protected Dictionary<Vector2Int, Item> itemGrid = new Dictionary<Vector2Int, Item>();
 
-    internal void Initialize(InventoryType type, InventoryData data)
+    internal void Initialize(InventoryType type, InventoryData data, bool destroyOnClose = true)
     {
         this.type = type;
         this.data = data;
@@ -210,11 +210,69 @@ public class Inventory : MonoBehaviour
         return itemGrid.ContainsValue(item);
     }
 
+    public bool ContainsInventory(Inventory inventory)
+    {
+        if (this == inventory)
+        {
+            return true;
+        }
+        // if any bag item's inventory is the inventory
+        foreach (Item item in GetItemsAsList())
+        {
+            ItemBag bagItem;
+            try
+            {
+                bagItem = (ItemBag)item;
+            }
+            catch
+            {
+                continue;
+            }
+            if (bagItem.bagInventory.ContainsInventory(inventory))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public List<Item> GetItemsAsList()
+    {
+        // get list of unique items
+        List<Item> items = new List<Item>();
+        foreach (Item item in itemGrid.Values)
+        {
+            if (!items.Contains(item))
+            {
+                items.Add(item);
+            }
+        }
+        return items;
+    }
+
     public void SetLayer(int x)
     {
         Vector3 temp = transform.position;
         temp.z = -x;
         transform.position = temp;
+    }
+
+    public void PropogateDestroyOnClose(bool destroyOnClose)
+    {
+        this.destroyOnClose = destroyOnClose;
+        foreach (Item item in GetItemsAsList())
+        {
+            ItemBag bagItem;
+            try
+            {
+                bagItem = (ItemBag)item;
+            }
+            catch
+            {
+                continue;
+            }
+            bagItem.PropogateDestroyOnClose(destroyOnClose);
+        }
     }
 
     public virtual void Destroy()

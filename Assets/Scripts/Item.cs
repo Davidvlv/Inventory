@@ -9,9 +9,8 @@ public class Item : MonoBehaviour {
     //public SpriteRenderer spriteRenderer;
 
     public Inventory placedInventory;
-
-    [SerializeField]
-    private bool initialized;
+    
+    protected bool initialized;
 
     private static Vector3 offset = new Vector3(0.5f, 0.5f, 0);
 

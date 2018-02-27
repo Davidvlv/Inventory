@@ -44,11 +44,11 @@ public class ItemCreator : MonoBehaviour {
         // everything!
         if (i > items.Count)
         {
-            iManager.NewInventoryWithItems(items, "New Items", inventoryType);
+            iManager.NewInventoryWithItems(items, null, inventoryType);
             return;
         }
         // option[0] is "Choose an item"
-        iManager.NewInventoryWithItems(new List<ItemData>() { items[i - 1] }, "New Items", inventoryType);
+        iManager.NewInventoryWithItems(new List<ItemData>() { items[i - 1] }, null, inventoryType);
     }
 	
 
