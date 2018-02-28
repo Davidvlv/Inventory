@@ -11,6 +11,7 @@ public class ItemCreator : MonoBehaviour {
     public InventoryType inventoryType;
 
     private InventoryManager iManager;
+    private Inventory createInventory;
 
     void Start () {
         iManager = InventoryManager.instance;
@@ -41,14 +42,26 @@ public class ItemCreator : MonoBehaviour {
 
     public void SelectItem(int i)
     {
+        if (i <= 0)
+        {
+            return;
+        }
+        Inventory newInventory;
         // everything!
         if (i > items.Count)
         {
-            iManager.NewInventoryWithItems(items, null, inventoryType);
-            return;
+            newInventory = iManager.NewInventoryWithItems(items, null, inventoryType);
         }
-        // option[0] is "Choose an item"
-        iManager.NewInventoryWithItems(new List<ItemData>() { items[i - 1] }, null, inventoryType);
+        else
+        {
+            newInventory = iManager.NewInventoryWithItems(new List<ItemData>() { items[i - 1] }, null, inventoryType);
+        }
+        if (createInventory != null)
+        {
+            newInventory.transform.position = createInventory.GetTransposedPosition(newInventory);
+            iManager.DestroyInventory(createInventory);
+        }
+        createInventory = newInventory;
     }
 	
 

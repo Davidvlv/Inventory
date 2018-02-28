@@ -82,6 +82,14 @@ public class Inventory : MonoBehaviour
 
     }
 
+    public Vector3 GetTransposedPosition(Inventory otherInventory)
+    {
+        Vector3 newPosition = new Vector3(transform.position.x,
+                                          transform.position.y + data.height - otherInventory.data.height, 
+                                          transform.position.z);
+        return newPosition;
+    }
+
     public void Resize(uint width, uint height)
     {
         this.data.height = width;

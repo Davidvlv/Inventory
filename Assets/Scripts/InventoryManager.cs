@@ -162,13 +162,13 @@ public class InventoryManager : MonoBehaviour
         return inventory;
     }
 
-    public void NewInventoryWithItems(List<ItemData> items, InventoryData data = null, InventoryType type = null)
+    public Inventory NewInventoryWithItems(List<ItemData> items, InventoryData data = null, InventoryType type = null)
     {
         // clone the list as to not change it
         List<ItemData> createItems = new List<ItemData>(items);
         if (items.Count == 0)
         {
-            return;
+            return null;
         }
 
         bool incrementHeightOrWidth = false;
@@ -210,9 +210,11 @@ public class InventoryManager : MonoBehaviour
             }
 
         }
+
+        return newInventory;
     }
 
-    public void NewInventoryWithItems(List<ItemData> items, string name, uint width, uint height, 
+    public Inventory NewInventoryWithItems(List<ItemData> items, string name, uint width, uint height, 
         WBListType wbType = WBListType.whitelist, List<ItemData> wbList = null, InventoryType type = null)
     {
         InventoryData data = ScriptableObject.CreateInstance<InventoryData>();
@@ -222,7 +224,7 @@ public class InventoryManager : MonoBehaviour
         data.wbType = wbType;
         data.wbList = wbList;
 
-        NewInventoryWithItems(items, data, type);
+        return NewInventoryWithItems(items, data, type);
     }
 
     private bool PackItem(Item item, Inventory inventory)
