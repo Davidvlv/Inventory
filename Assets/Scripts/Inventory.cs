@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using TMPro;
 
 [RequireComponent(typeof(Tilemap))]
 [RequireComponent(typeof(TilemapRenderer))]
@@ -15,12 +16,11 @@ public class Inventory : MonoBehaviour
     public InventoryDrag topbar;
     BoxCollider2D box;
     public InventoryClose closeButton;
+    public Canvas canvas;
+    public TextMeshProUGUI title;
 
     //public bool closeOnEmpty { get; private set; }
     public bool destroyOnClose { get; protected set; }
-
-    public WBListType wbListType;
-    public List<ItemData> wbList;
     
     protected Dictionary<Vector2Int, Item> itemGrid = new Dictionary<Vector2Int, Item>();
 
@@ -71,6 +71,15 @@ public class Inventory : MonoBehaviour
 
         // close button
         closeButton.transform.localPosition = new Vector3(data.width - type.closeButtonPaddingRight, data.height - type.closeButtonPaddingTop, -0.2f);
+
+        // canvas
+        RectTransform rt = canvas.GetComponent<RectTransform>();
+        rt.sizeDelta = new Vector2(100 * (data.width + 2), 100 * (data.height + 2));
+        rt.anchoredPosition = new Vector3((float)data.width / 2, (float)data.height / 2);
+
+        // title
+        title.text = data.name;
+
     }
 
     public void Resize(uint width, uint height)
@@ -82,7 +91,30 @@ public class Inventory : MonoBehaviour
 
     public virtual bool CanHold(Item item)
     {
-        return true;
+        bool whitelist = (data.wbType == WBListType.whitelist);
+
+        // Specific items
+        if (data.wbList != null)
+        {
+            if (data.wbList.Contains(item.data))
+            {
+                return whitelist ? true : false;
+            }
+        }
+
+        // Generic Types
+        if (data.wbListGeneric != null)
+        {
+            if (data.wbListGeneric.Contains(item.data.type))
+            {
+                // if item is in the whitelist, then we can hold it.
+                // if item is in the blacklist, then we can not.
+                return whitelist ? true : false;
+            }
+        }
+        // if item is not in the whitelist, then we can't hold it
+        // if item is not in the blacklist, then we can.
+        return whitelist ? false : true;
     }
 
     /// <summary>

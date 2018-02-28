@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum WBListType { whitelist, blacklist };
+public enum WBListType { blacklist, whitelist };
 
 [CreateAssetMenuAttribute(fileName = "InventoryData", menuName = "Inventory/Inventory Data", order = 0)]
 public class InventoryData : ScriptableObject {
@@ -10,4 +10,5 @@ public class InventoryData : ScriptableObject {
     public uint width, height;
     public WBListType wbType;
     public List<ItemData> wbList;
+    public List<ItemType> wbListGeneric;
 }

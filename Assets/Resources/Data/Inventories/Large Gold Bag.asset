@@ -9,10 +9,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c742bbcbb0d80fa4183c1f410b5e1af6, type: 3}
-  m_Name: Large Bag Inventory
+  m_Name: Large Gold Bag
   m_EditorClassIdentifier: 
-  name: Large Bag Inventory
+  name: Gold Bag
   width: 4
   height: 5
-  wbListType: 0
-  wbList: []
+  wbType: 1
+  wbList:
+  - {fileID: 11400000, guid: f55ca4d60c000e7409283fa69670bc22, type: 2}
+  - {fileID: 11400000, guid: b5ad795cabe437345b20a940af924ef2, type: 2}
+  wbListGeneric: 

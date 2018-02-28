@@ -48,6 +48,11 @@ public class Item : MonoBehaviour {
 
     public virtual bool Place(Inventory inventory, Vector2Int position)
     {
+        if (!inventory.CanHold(this))
+        {
+            return false;
+        }
+
         if (this.placedInventory)
         {
             RemoveFromInventory();

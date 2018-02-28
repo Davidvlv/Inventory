@@ -147,7 +147,7 @@ public class InventoryManager : MonoBehaviour
         if (!data)
         {
             data = ScriptableObject.CreateInstance<InventoryData>();
-            data.name = "New Inventory";
+            data.name = "New";
             data.height = 1;
             data.width = 1;
         }
@@ -227,6 +227,11 @@ public class InventoryManager : MonoBehaviour
 
     private bool PackItem(Item item, Inventory inventory)
     {
+        if (!inventory.CanHold(item))
+        {
+            return false;
+        }
+
         bool placed = false;
         for (int i = 0; i < inventory.data.height; i++)
         {

@@ -11,8 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c742bbcbb0d80fa4183c1f410b5e1af6, type: 3}
   m_Name: Bag Inventory
   m_EditorClassIdentifier: 
-  name: Bag Inventory
+  name: Bag
   width: 3
   height: 3
-  wbListType: 0
+  wbType: 0
   wbList: []
+  wbListGeneric: 01000000

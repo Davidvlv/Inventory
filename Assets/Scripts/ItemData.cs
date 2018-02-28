@@ -3,7 +3,7 @@ using UnityEngine;
 
 public enum ItemType
 {
-    none, bag
+    normal, bag
 }
 
 public enum RenderType
@@ -50,7 +50,7 @@ public class ItemData : ScriptableObject
         Item item = null;
         switch (type)
         {
-            case ItemType.none: item = itemObject.AddComponent<Item>();         break;
+            case ItemType.normal: item = itemObject.AddComponent<Item>();         break;
             case ItemType.bag:  item = itemObject.AddComponent<ItemBag>();      break;
         }
 

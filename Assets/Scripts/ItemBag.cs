@@ -41,10 +41,6 @@ public class ItemBag : Item {
         {
             return false;
         }
-        if (!inventory.CanHold(this))
-        {
-            return false;
-        }
         
         // place me
         if (!base.Place(inventory, position))
