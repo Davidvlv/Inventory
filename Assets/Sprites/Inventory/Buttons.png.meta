@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 7b2769f0651dd1f4bad9c4c1a271cdbc
-timeCreated: 1519263828
+timeCreated: 1519935685
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -8,6 +8,10 @@ TextureImporter:
     21300002: Close_Down
     21300004: Minimise
     21300006: MinimiseDown
+    21300008: Maximise
+    21300010: MaximiseDown
+    21300012: Hotkey
+    21300014: HotkeyDown
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -95,6 +99,62 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
+        y: 24
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Close_Down
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 24
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Minimise
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: MinimiseDown
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 16
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: Maximise
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 8
         width: 8
         height: 8
@@ -105,7 +165,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Close_Down
+      name: MaximiseDown
       rect:
         serializedVersion: 2
         x: 8
@@ -119,7 +179,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Minimise
+      name: Hotkey
       rect:
         serializedVersion: 2
         x: 0
@@ -133,7 +193,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: MinimiseDown
+      name: HotkeyDown
       rect:
         serializedVersion: 2
         x: 8

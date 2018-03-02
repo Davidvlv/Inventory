@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class InventoryClose : MonoBehaviour
 {
@@ -14,9 +15,16 @@ public class InventoryClose : MonoBehaviour
     {
         iManager = InventoryManager.instance;
     }
+    internal void Initialize(Sprite button, Sprite buttonDown)
+    {
+        sprite = button;
+        spriteDown = buttonDown;
+        spriteRenderer.sprite = sprite;
+    }
 
     private void OnMouseDown()
     {
+        iManager.SendToFront(inventory);
         spriteRenderer.sprite = spriteDown;
     }
 
@@ -25,4 +33,5 @@ public class InventoryClose : MonoBehaviour
         spriteRenderer.sprite = sprite;
         iManager.Close(inventory);
     }
+
 }

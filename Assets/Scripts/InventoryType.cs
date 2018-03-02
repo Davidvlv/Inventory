@@ -8,5 +8,11 @@ public class InventoryType : ScriptableObject {
 
     public Sprite closeButton;
     public Sprite closeButtonDown;
-    public float closeButtonPaddingRight, closeButtonPaddingTop;
+    public Sprite minimiseButton;
+    public Sprite minimiseButtonDown;
+    public Sprite maximiseButton;
+    public Sprite maximiseButtonDown;
+    public Sprite hotkeyButton;
+    public Sprite hotkeyButtonDown;
+    public float buttonsPaddingTop, closeButtonPaddingRight, minimiseButtonPaddingRight;
 }

@@ -14,13 +14,16 @@ public class Inventory : MonoBehaviour
     public Tilemap tilemap;
     public TilemapRenderer tRenderer;
     public InventoryDrag topbar;
-    BoxCollider2D box;
+    public BoxCollider2D box;
     public InventoryClose closeButton;
+    public InventoryMinMaximise minmaxButton;
     public Canvas canvas;
     public TextMeshProUGUI title;
 
     //public bool closeOnEmpty { get; private set; }
     public bool destroyOnClose { get; protected set; }
+
+    private bool isMaximised = true;
     
     protected Dictionary<Vector2Int, Item> itemGrid = new Dictionary<Vector2Int, Item>();
 
@@ -33,8 +36,8 @@ public class Inventory : MonoBehaviour
         //this.destroyOnClose = closeOnEmpty ? true : destroyOnClose; // if it's closeOnEmpty, then it must be destroyOnClose
         this.destroyOnClose = destroyOnClose;
 
-        this.closeButton.sprite = type.closeButton;
-        this.closeButton.spriteDown = type.closeButtonDown;
+        closeButton.Initialize(type.closeButton, type.closeButtonDown);
+        minmaxButton.Initialize(type.minimiseButton, type.minimiseButtonDown, type.maximiseButton, type.maximiseButtonDown);
     }
 
     private void Start()
@@ -55,7 +58,7 @@ public class Inventory : MonoBehaviour
         }
 
         // Set collider properties
-        box = GetComponent<BoxCollider2D>();
+        box.enabled = true;
         box.size = new Vector2(data.width + type.paddingLeft + type.paddingRight - type.edgeRadius * 2, 
                                 data.height + type.paddingTop + type.paddingBottom - type.edgeRadius * 2);
         box.offset = new Vector2((data.width + type.paddingLeft - type.paddingRight) / 2, 
@@ -70,7 +73,10 @@ public class Inventory : MonoBehaviour
         topbar.topCollider.edgeRadius = type.edgeRadius;
 
         // close button
-        closeButton.transform.localPosition = new Vector3(data.width - type.closeButtonPaddingRight, data.height - type.closeButtonPaddingTop, -0.2f);
+        closeButton.transform.localPosition = new Vector3(data.width - type.closeButtonPaddingRight, data.height - type.buttonsPaddingTop, -0.2f);
+
+        // minimise button
+        minmaxButton.transform.localPosition = new Vector3(data.width - type.minimiseButtonPaddingRight, data.height - type.buttonsPaddingTop, -0.2f);
 
         // canvas
         RectTransform rt = canvas.GetComponent<RectTransform>();
@@ -136,6 +142,10 @@ public class Inventory : MonoBehaviour
         if (!item.gameObject)
         {
             throw (new System.Exception("Invalid item, item must have a gameobject"));
+        }
+        if (!isMaximised)
+        {
+            return false;
         }
         // check if item fits
         foreach (Vector2Int slotOffset in item.data.slotPositions)
@@ -325,5 +335,29 @@ public class Inventory : MonoBehaviour
             }
         }
         Destroy(gameObject);
+    }
+
+    public void MinMaximise(bool isMax)
+    {
+        isMaximised = isMax;
+        foreach(Item item in GetItemsAsList())
+        {
+            item.gameObject.SetActive(isMaximised);
+        }
+        if (isMaximised)
+        {
+            CreateUI();
+        }
+        else
+        {
+            tilemap.ClearAllTiles();
+            for (int i = -1; i <= data.width; i++)
+            {
+                tilemap.SetTile(new Vector3Int(i, (int)data.height, 0), type.ruleTile);
+            }
+
+            // Set collider properties
+            box.enabled = false;
+        }
     }
 }
