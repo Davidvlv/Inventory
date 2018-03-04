@@ -51,15 +51,15 @@ public class ItemBag : Item {
         if (initialized)
         {
             // propogate destroyOnClose to all children
-            PropogateDestroyOnClose(inventory.destroyOnClose);
+            SetPermanence(inventory.isPermanent);
         }
 
         return true;
     }
 
-    public void PropogateDestroyOnClose(bool destroyOnClose)
+    public void SetPermanence(bool isPermanent)
     {
-        bagInventory.PropogateDestroyOnClose(destroyOnClose);
+        bagInventory.SetPermanence(isPermanent);
     }
 
     public override void Interact()

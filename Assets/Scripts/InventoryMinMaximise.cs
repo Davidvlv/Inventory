@@ -39,7 +39,12 @@ public class InventoryMinMaximise : MonoBehaviour
     private void OnMouseUp()
     { 
         // minimise/maximise
-        isMin = !isMin;
+        Set(!isMin);
+    }
+
+    public void Set(bool isMin)
+    {
+        this.isMin = isMin;
         spriteRenderer.sprite = isMin ? spriteMin : spriteMax;
         inventory.MinMaximise(isMin);
     }

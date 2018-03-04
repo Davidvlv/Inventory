@@ -21,23 +21,22 @@ public class Inventory : MonoBehaviour
     public TextMeshProUGUI title;
 
     //public bool closeOnEmpty { get; private set; }
-    public bool destroyOnClose { get; protected set; }
+    public bool isPermanent { get; private set; }
 
     private bool isMaximised = true;
     
     protected Dictionary<Vector2Int, Item> itemGrid = new Dictionary<Vector2Int, Item>();
 
-    internal void Initialize(InventoryType type, InventoryData data, bool destroyOnClose = true)
+    internal void Initialize(InventoryType type, InventoryData data, bool isPermanent = true)
     {
         this.type = type;
         this.data = data;
         this.name = data.name;
-        //this.closeOnEmpty = closeOnEmpty;
-        //this.destroyOnClose = closeOnEmpty ? true : destroyOnClose; // if it's closeOnEmpty, then it must be destroyOnClose
-        this.destroyOnClose = destroyOnClose;
+        SetPermanence(isPermanent);
 
         closeButton.Initialize(type.closeButton, type.closeButtonDown);
         minmaxButton.Initialize(type.minimiseButton, type.minimiseButtonDown, type.maximiseButton, type.maximiseButtonDown);
+
     }
 
     private void Start()
@@ -307,9 +306,14 @@ public class Inventory : MonoBehaviour
         transform.position = temp;
     }
 
-    public void PropogateDestroyOnClose(bool destroyOnClose)
+    public void SetPermanence(bool isPermanent)
     {
-        this.destroyOnClose = destroyOnClose;
+        this.isPermanent = isPermanent;
+        minmaxButton.gameObject.SetActive(isPermanent);
+        if (!isPermanent)
+        {
+            minmaxButton.Set(!isPermanent);
+        }
         foreach (Item item in GetItemsAsList())
         {
             ItemBag bagItem;
@@ -321,7 +325,7 @@ public class Inventory : MonoBehaviour
             {
                 continue;
             }
-            bagItem.PropogateDestroyOnClose(destroyOnClose);
+            bagItem.SetPermanence(isPermanent);
         }
     }
 
